@@ -49,14 +49,14 @@ func (dao *DaoCore) GetDBw() *mysqldb.MySqlDB {
 
 // InitDao 初始化dao
 func (dao *DaoCore) InitDao() {
-	runtime.SetFinalizer(dao, dao.Destory) //析构时触发
+	runtime.SetFinalizer(dao, dao.Destroy) //析构时触发
 
 	dao.dbr = mysqldb.OnInitDBOrm(config.GetMysqlConStr())
 	dao.dbw = mysqldb.OnInitDBOrm(config.GetMysqlConStr())
 }
 
 // Destory 释放
-func (dao *DaoCore) Destory() {
+func (dao *DaoCore) Destroy() {
 	if dao.dbr != nil {
 		dao.dbr.OnDestoryDB()
 	}

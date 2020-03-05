@@ -55,7 +55,7 @@ func (dao *DaoCore) InitDao() {
 	dao.dbw = mysqldb.OnInitDBOrm(config.GetMysqlConStr())
 }
 
-// Destory 释放
+// Destroy 释放
 func (dao *DaoCore) Destroy() {
 	if dao.dbr != nil {
 		dao.dbr.OnDestoryDB()

@@ -4,16 +4,11 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/xxjwxc/public/tools"
-
-	"gmsec/internal/core"
-	"gmsec/internal/model"
 	_ "gmsec/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
 	"github.com/gin-gonic/gin"
 	"github.com/xxjwxc/ginrpc"
 	"github.com/xxjwxc/ginrpc/api"
-	"github.com/xxjwxc/gowp/workpool"
 )
 
 // ReqTest demo struct
@@ -60,23 +55,23 @@ func TestFun6(c *gin.Context, req ReqTest) (*ReqTest, error) {
 func main() {
 
 	// debug test
-	wp := workpool.New(1000)    // Set the maximum number of threads
-	for i := 0; i < 2000; i++ { // Open 20 requests
-		wp.Do(func() error {
-			orm := core.Dao.GetDBr()
-			var ut []model.UserInfoTbl
-			err := orm.Table("user_info_tbl").Find(&ut).Error
-			if err != nil {
-				fmt.Println(err.Error())
-				return err
-			}
-			fmt.Println(tools.GetJSONStr(ut, true))
-			return nil
-		})
-	}
+	// wp := workpool.New(1000)    // Set the maximum number of threads
+	// for i := 0; i < 2000; i++ { // Open 20 requests
+	// 	wp.Do(func() error {
+	// 		orm := core.Dao.GetDBr()
+	// 		var ut []model.UserInfoTbl
+	// 		err := orm.Table("user_info_tbl").Find(&ut).Error
+	// 		if err != nil {
+	// 			fmt.Println(err.Error())
+	// 			return err
+	// 		}
+	// 		fmt.Println(tools.GetJSONStr(ut, true))
+	// 		return nil
+	// 	})
+	// }
 
-	wp.Wait()
-	fmt.Println("down")
+	// wp.Wait()
+	// fmt.Println("down")
 
 	// swagger
 	// -----end --

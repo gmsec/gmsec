@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/xxjwxc/gmsec.svg?branch=master)](https://travis-ci.org/xxjwxc/gmsec)
 [![Go Report Card](https://goreportcard.com/badge/github.com/xxjwxc/gmsec)](https://goreportcard.com/report/github.com/xxjwxc/gmsec)
+[![codecov](https://codecov.io/gh/xxjwxc/gmsec/branch/master/graph/badge.svg)](https://codecov.io/gh/xxjwxc/gmsec)
 [![GoDoc](https://godoc.org/github.com/xxjwxc/gmsec?status.svg)](https://godoc.org/github.com/xxjwxc/gmsec)
 
 # gmsec 基于[ginprc](https://github.com/xxjwxc/ginrpc) 实现微服务架构集

@@ -82,7 +82,9 @@ github.com/gorilla/context v1.1.1/go.mod h1:kBGZzfjB9CEq2AlWe17Uuf7NDRt0dE0s8S51
 github.com/gorilla/mux v1.6.2/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
 github.com/hashicorp/golang-lru v0.5.0/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ4Ao+sR/qLZy8=
 github.com/hpcloud/tail v1.0.0/go.mod h1:ab1qPbhIpdTxEkNHXyeSf5vhxWSCs/tWer42PpOxQnU=
+github.com/jander/golog v0.0.0-20150917071935-954a5be801fc h1:l+v2jwOsGum32nR8cN1MxAtvUWQCIcQGm4WHwizaAbA=
 github.com/jander/golog v0.0.0-20150917071935-954a5be801fc/go.mod h1:uWhWXOR4dpfk9J8fegnMY7sP2GFXxe3PFI9Ps+TRXJs=
+github.com/jinzhu/gorm v1.9.10/go.mod h1:Kh6hTsSGffh4ui079FHrR5Gg+5D0hgihqDcsDN2BBJY=
 github.com/jinzhu/gorm v1.9.11 h1:gaHGvE+UnWGlbWG4Y3FUwY1EcZ5n6S9WtqBA/uySMLE=
 github.com/jinzhu/gorm v1.9.11/go.mod h1:bu/pK8szGZ2puuErfU0RwyeNdsf3e6nCX/noXaVxkfw=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
@@ -96,6 +98,7 @@ github.com/json-iterator/go v1.1.9 h1:9yzud/Ht36ygwatGx56VwCZtlI/2AD15T1X2sjSuGn
 github.com/json-iterator/go v1.1.9/go.mod h1:KdQUCv79m/52Kvf8AW2vK1V8akMuk1QjK/uOdHXbAo4=
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7VTCxuUUipMqKk8s4w=
+github.com/kardianos/service v1.0.1-0.20191017145738-4df36c9fc1c6 h1:yXmAejtSQYYDbY5Zv4BQDV4irr8r88UjcWufn4PtF5I=
 github.com/kardianos/service v1.0.1-0.20191017145738-4df36c9fc1c6/go.mod h1:8CzDhVuCuugtsHyZoTvsOBuvonN/UDBvl0kH+BUxvbo=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
@@ -117,6 +120,7 @@ github.com/mattn/go-isatty v0.0.11/go.mod h1:PhnuNfih5lzO57/f3n+odYbM4JtupLOxQOA
 github.com/mattn/go-isatty v0.0.12 h1:wuysRhFDzyxgEmMf5xjvJ2M9dZoWAXNNr5LSBS7uHXY=
 github.com/mattn/go-isatty v0.0.12/go.mod h1:cbi8OIDigv2wuxKPP5vlRcQ1OAZbq2CE4Kysco4FUpU=
 github.com/mattn/go-runewidth v0.0.8/go.mod h1:H031xJmbD/WCDINGzjvQ9THkh0rPKHF+m2gUSrubnMI=
+github.com/mattn/go-sqlite3 v1.10.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
 github.com/mattn/go-sqlite3 v1.11.0/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
 github.com/mattn/go-sqlite3 v2.0.2+incompatible/go.mod h1:FPy6KqzDD04eiIsT53CuJW3U88zkxoIYsOqkbpncsNc=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
@@ -126,6 +130,7 @@ github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd/go.mod h1:6dJ
 github.com/modern-go/reflect2 v0.0.0-20180701023420-4b7aa43c6742/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
 github.com/modern-go/reflect2 v1.0.1 h1:9f412s+6RmYXLWZSEzVVgPGK7C2PphHj5RJrvfx9AWI=
 github.com/modern-go/reflect2 v1.0.1/go.mod h1:bx2lNnkwVCuqBIxFjflWJWanXIb3RllmbCylyMrvgv0=
+github.com/muesli/cache2go v0.0.0-20190609140403-5eb79359852d/go.mod h1:414R+qZrt4f9S2TO/s6YVQMNAXR2KdwqQ7pW+O4oYzU=
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/nicksnyder/go-i18n/v2 v2.0.3/go.mod h1:oDab7q8XCYMRlcrBnaY/7B1eOectbvj6B1UPBT+p5jo=
 github.com/nsf/termbox-go v0.0.0-20191229070316-58d4fcbce2a7/go.mod h1:IuKpRQcYE1Tfu+oAQqaLisqDeXgjyyltCfsaoYN18NQ=
@@ -168,6 +173,9 @@ github.com/xxjwxc/ginrpc v0.0.0-20200226161118-fe4abdc9fcfd h1:WaJb0rSISGk3Sz5Ad
 github.com/xxjwxc/ginrpc v0.0.0-20200226161118-fe4abdc9fcfd/go.mod h1:OP2/jSOAHKzqncC6eAjMw0YtidO6LpbKXioXC2y1WFU=
 github.com/xxjwxc/gowp v0.0.0-20200102094413-b08b68b60e54 h1:RIYXdJfIkIvoNWaBpjuyJt9Wq+GKK0973Mk8RhVaCeY=
 github.com/xxjwxc/gowp v0.0.0-20200102094413-b08b68b60e54/go.mod h1:W3ov9P5mWRYbXSd0LQ9k7qmxAIYKeYMOKtjFdek4fv4=
+github.com/xxjwxc/oauth2 v0.0.0-20190808024603-51b29e7b4508 h1:ySuq8yTGfbWJtVmQ+00XcYg3YeyuNI9792VIYW/Guwk=
+github.com/xxjwxc/oauth2 v0.0.0-20190808024603-51b29e7b4508/go.mod h1:kVhGsEPRDoyfbD94fawNqr3js3BNYk8SKDvBdiGpY34=
+github.com/xxjwxc/public v0.0.0-20190725094702-3eaa87d591d7/go.mod h1:AmfXDXC/4+KQ2rxGP5XLZ1GpE17PopBg0FtokxW/kpg=
 github.com/xxjwxc/public v0.0.0-20191231095155-8f0478819bf3/go.mod h1:jRdnSLrbRE/HOshXVrT89giQDRAOCGUer3yU996I2kE=
 github.com/xxjwxc/public v0.0.0-20200120153226-f36cf754df21 h1:1OF0Q6FGQhmziN4yvHLiF9XXOqfChL5z4rcogSQqCos=
 github.com/xxjwxc/public v0.0.0-20200120153226-f36cf754df21/go.mod h1:UYQUNNJmUzNKpjY5ctz1n/XoJonmhAIgD51zS2rEsek=

@@ -15,6 +15,7 @@ require (
 	github.com/rogpeppe/godef v1.1.2-0.20200303182854-8318a6814d22 // indirect
 	github.com/xxjwxc/ginrpc v0.0.0-20200226161118-fe4abdc9fcfd
 	github.com/xxjwxc/gowp v0.0.0-20200102094413-b08b68b60e54
+	github.com/xxjwxc/oauth2 v0.0.0-20190808024603-51b29e7b4508
 	github.com/xxjwxc/public v0.0.0-20200305091601-98084088e9b9
 	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
 	golang.org/x/tools v0.0.0-20200305140159-d7d444866696 // indirect

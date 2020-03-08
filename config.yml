@@ -1,5 +1,5 @@
 base:
-    is_dev : false
+    is_dev : true
     serial_number : 1.0.0
     service_name : gmsec
     service_displayname : gmsecserver

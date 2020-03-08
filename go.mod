@@ -13,12 +13,16 @@ require (
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/rogpeppe/godef v1.1.2-0.20200303182854-8318a6814d22 // indirect
-	github.com/xxjwxc/ginrpc v0.0.0-20200226161118-fe4abdc9fcfd
+	github.com/xxjwxc/ginrpc v0.0.0-20200308164437-3eadf8c46ec0
 	github.com/xxjwxc/gowp v0.0.0-20200102094413-b08b68b60e54
 	github.com/xxjwxc/oauth2 v0.0.0-20190808024603-51b29e7b4508
-	github.com/xxjwxc/public v0.0.0-20200305091601-98084088e9b9
+	github.com/xxjwxc/public v0.0.0-20200308164103-d57a827b648c
 	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
 	golang.org/x/tools v0.0.0-20200305140159-d7d444866696 // indirect
+	gopkg.in/go-playground/validator.v9 v9.29.1 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200121175148-a6ecf24a6d71
 )
+
+//replace github.com/xxjwxc/public => ../public
+//replace github.com/xxjwxc/ginrpc => ../ginrpc

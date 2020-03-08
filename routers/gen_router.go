@@ -5,8 +5,7 @@ import (
 )
 
 func init() {
-	ginrpc.SetVersion(1583588462)
-	ginrpc.AddGenOne("Hello.Hello", "/block", []string{"post", "get"})
-	ginrpc.AddGenOne("Hello.Hello2", "hello.hello2", []string{"post"})
-	ginrpc.AddGenOne("Hello.Hello3", "hello.hello3", []string{"post"})
+	ginrpc.SetVersion(1583685971)
+	ginrpc.AddGenOne("Hello.Block", "/block", []string{"post", "get"})
+	ginrpc.AddGenOne("Hello.MySql2", "hello.my_sql2", []string{"post"})
 }

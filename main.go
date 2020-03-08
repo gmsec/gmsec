@@ -5,6 +5,9 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/xxjwxc/public/mydoc/myswagger"
+
+	models "gmsec/internal/model"
 	_ "gmsec/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
 	"gmsec/config"
@@ -27,27 +30,29 @@ type Hello struct {
 	Index int
 }
 
-// Hello 带注解路由(参考beego形式)
+// Block 带注解路由(参考beego形式)
 // @Router /block [post,get]
-func (s *Hello) Hello(c *api.Context, req *ReqTest) {
+func (s *Hello) Block(c *api.Context, req *ReqTest) (*ReqTest, error) {
 	fmt.Println(req)
 	fmt.Println(s.Index)
 	c.JSON(http.StatusOK, "ok")
+	return nil, nil
 }
 
-// Hello2 不带注解路由(参数为2默认post)
-func (s *Hello) Hello2(c *gin.Context, req ReqTest) {
+// MySql2 不带注解路由(参数为2默认post)
+func (s *Hello) MySql2(c *gin.Context, req models.Oauth2AccessToken) (*models.Oauth2ClientTbl, error) {
 	fmt.Println(req)
 	fmt.Println(s.Index)
 	c.JSON(http.StatusOK, "ok")
+	return nil, nil
 }
 
-//Hello3 带自定义context跟已解析的req参数回调方式,err,resp 返回模式
-func (s *Hello) Hello3(c *gin.Context, req ReqTest) (*ReqTest, error) {
-	fmt.Println(req)
-	//c.JSON(http.StatusOK, req)
-	return &req, nil
-}
+// // Block3 带自定义context跟已解析的req参数回调方式,err,resp 返回模式
+// func (s *Hello) Block3(c *gin.Context, req ReqTest) (*ReqTest, error) {
+// 	fmt.Println(req)
+// 	//c.JSON(http.StatusOK, req)
+// 	return &req, nil
+// }
 
 //TestFun6 带自定义context跟已解析的req参数回调方式,err,resp 返回模式
 func TestFun6(c *gin.Context, req ReqTest) (*ReqTest, error) {
@@ -79,6 +84,9 @@ func CallBack() {
 	// fmt.Println("down")
 
 	// swagger
+	myswagger.SetHost("https://localhost:8080")
+	myswagger.SetBasePath("gmsec")
+	myswagger.SetSchemes(true, false)
 	// -----end --
 
 	base := ginrpc.New(ginrpc.WithCtx(func(c *gin.Context) interface{} {
@@ -92,7 +100,7 @@ func CallBack() {
 	router.POST("/test6", base.HandlerFunc(TestFun6))                            // 函数注册
 	base.RegisterHandlerFunc(router, []string{"post", "get"}, "/test", TestFun6) // 多种请求方式注册
 
-	router.Run(":8080")
+	// router.Run(":8080")
 }
 
 func main() {

@@ -21,11 +21,11 @@ import (
 // ReqTest demo struct
 type ReqTest struct {
 	AccessToken *models.Oauth2AccessToken  `json:"access_token"`
-	UserName    int32                      `json:"user_name" binding:"required"` // 带校验方式
+	UserName    int32                      `json:"user_name" binding:"required" default:"aaaaaa"` // 带校验方式
 	Password    []string                   `json:"password"`
 	Mod         []models.Oauth2AccessToken `json:"mod"`
 	// 测试1111
-	Hell Hello `json:"hello"` // 测试
+	Hell Hello `json:"hellxxjwo"` // 测试
 }
 
 // Hello ...

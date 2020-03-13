@@ -3,26 +3,22 @@ module gmsec
 go 1.14
 
 require (
-	9fans.net/go v0.0.2 // indirect
-	github.com/bmizerany/assert v0.0.0-20160611221934-b7ed37b82869 // indirect
+	github.com/denisenkom/go-mssqldb v0.0.0-20200206145737-bbfc9a55622e // indirect
 	github.com/gin-gonic/gin v1.5.1-0.20191220060158-9b3477ef9d2c
 	github.com/go-playground/validator/v10 v10.2.0 // indirect
-	github.com/golang/protobuf v1.3.4 // indirect
-	github.com/gookit/color v1.2.3 // indirect
-	github.com/jinzhu/gorm v1.9.11
-	github.com/kr/pretty v0.2.0 // indirect
+	github.com/go-sql-driver/mysql v1.5.0 // indirect
+	github.com/jinzhu/gorm v1.9.12
+	github.com/jinzhu/now v1.1.1 // indirect
+	github.com/kr/text v0.2.0 // indirect
+	github.com/lib/pq v1.3.0 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
-	github.com/rogpeppe/godef v1.1.2-0.20200303182854-8318a6814d22 // indirect
-	github.com/xxjwxc/ginrpc v0.0.0-20200308164437-3eadf8c46ec0
-	github.com/xxjwxc/gowp v0.0.0-20200102094413-b08b68b60e54
-	github.com/xxjwxc/oauth2 v0.0.0-20190808024603-51b29e7b4508
-	github.com/xxjwxc/public v0.0.0-20200308164103-d57a827b648c
-	golang.org/x/sys v0.0.0-20200302150141-5c8b2ff67527 // indirect
-	golang.org/x/tools v0.0.0-20200305140159-d7d444866696 // indirect
-	gopkg.in/go-playground/validator.v9 v9.29.1 // indirect
-	gopkg.in/yaml.v2 v2.2.8 // indirect
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
+	github.com/xxjwxc/ginrpc v0.0.0-20200313115523-2c0cf0d8dfc0
+	github.com/xxjwxc/public v0.0.0-20200313114933-0f2ad38132bc
+	golang.org/x/crypto v0.0.0-20200311171314-f7b00557c8c4 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200121175148-a6ecf24a6d71
 )
 
-//replace github.com/xxjwxc/public => ../public
-//replace github.com/xxjwxc/ginrpc => ../ginrpc
+// replace github.com/xxjwxc/public => ../public
+
+// replace github.com/xxjwxc/ginrpc => ../ginrpc

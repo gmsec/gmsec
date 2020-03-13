@@ -12,10 +12,11 @@
 ## 已实现列表
 - gorm 工具及自动生成 [gormt](https://github.com/xxjwxc/gormt)
 - 接入gin框架 [go-gin](https://github.com/gin-gonic/gin)
+- 自动生成api文档[swagger](https://swagger.io/) ,[markdown/mindoc](https://www.iminho.me/)
 
 ## 正在做
-- 自动生成api文档[swagger](https://swagger.io/) ,[mindoc](https://www.iminho.me/)
 - 接入 [grpc-go](https://github.com/grpc/grpc-go)
+- 服务发现
 
 
 ## 欢迎一起共建共享

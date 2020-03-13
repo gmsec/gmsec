@@ -30,7 +30,7 @@ func (obj *_UserAccountTblMgr) Get() (result UserAccountTbl, err error) {
 	if err == nil && obj.isRelated {
 		{
 			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
 			if err != nil {
 				return
 			}
@@ -48,7 +48,7 @@ func (obj *_UserAccountTblMgr) Gets() (results []*UserAccountTbl, err error) {
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -86,9 +86,9 @@ func (obj *_UserAccountTblMgr) WithAppKey(AppKey string) Option {
 	return optionFunc(func(o *options) { o.query["app_key"] = AppKey })
 }
 
-// WithUserInfoID user_info_id获取
-func (obj *_UserAccountTblMgr) WithUserInfoID(UserInfoID int) Option {
-	return optionFunc(func(o *options) { o.query["user_info_id"] = UserInfoID })
+// WithUserInfoTblID user_info_tbl_id获取
+func (obj *_UserAccountTblMgr) WithUserInfoTblID(UserInfoTblID int) Option {
+	return optionFunc(func(o *options) { o.query["user_info_tbl_id"] = UserInfoTblID })
 }
 
 // WithRegTime reg_time获取
@@ -124,7 +124,7 @@ func (obj *_UserAccountTblMgr) GetByOption(opts ...Option) (result UserAccountTb
 	if err == nil && obj.isRelated {
 		{
 			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
 			if err != nil {
 				return
 			}
@@ -150,7 +150,7 @@ func (obj *_UserAccountTblMgr) GetByOptions(opts ...Option) (results []*UserAcco
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -169,7 +169,7 @@ func (obj *_UserAccountTblMgr) GetFromID(ID int) (result UserAccountTbl, err err
 	if err == nil && obj.isRelated {
 		{
 			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
 			if err != nil {
 				return
 			}
@@ -187,7 +187,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromID(IDs []int) (results []*UserAccount
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -204,7 +204,7 @@ func (obj *_UserAccountTblMgr) GetFromAccount(Account string) (result UserAccoun
 	if err == nil && obj.isRelated {
 		{
 			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
 			if err != nil {
 				return
 			}
@@ -222,7 +222,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromAccount(Accounts []string) (results [
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -240,7 +240,7 @@ func (obj *_UserAccountTblMgr) GetFromPassword(Password string) (results []*User
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -258,7 +258,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromPassword(Passwords []string) (results
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -276,7 +276,7 @@ func (obj *_UserAccountTblMgr) GetFromAccountType(AccountType int) (results []*U
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -294,7 +294,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromAccountType(AccountTypes []int) (resu
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -306,30 +306,13 @@ func (obj *_UserAccountTblMgr) GetBatchFromAccountType(AccountTypes []int) (resu
 }
 
 // GetFromAppKey 通过app_key获取内容 authbucket_oauth2_client表的id
-func (obj *_UserAccountTblMgr) GetFromAppKey(AppKey string) (result UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("app_key = ?", AppKey).Find(&result).Error
-	if err == nil && obj.isRelated {
-		{
-			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
-			if err != nil {
-				return
-			}
-			result.UserInfoTbl = info
-		}
-	}
-
-	return
-}
-
-// GetBatchFromAppKey 批量唯一主键查找 authbucket_oauth2_client表的id
-func (obj *_UserAccountTblMgr) GetBatchFromAppKey(AppKeys []string) (results []*UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("app_key IN (?)", AppKeys).Find(&results).Error
+func (obj *_UserAccountTblMgr) GetFromAppKey(AppKey string) (results []*UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("app_key = ?", AppKey).Find(&results).Error
 	if err == nil && obj.isRelated {
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -340,31 +323,50 @@ func (obj *_UserAccountTblMgr) GetBatchFromAppKey(AppKeys []string) (results []*
 	return
 }
 
-// GetFromUserInfoID 通过user_info_id获取内容
-func (obj *_UserAccountTblMgr) GetFromUserInfoID(UserInfoID int) (result UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("user_info_id = ?", UserInfoID).Find(&result).Error
-	if err == nil && obj.isRelated {
-		{
-			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
-			if err != nil {
-				return
-			}
-			result.UserInfoTbl = info
-		}
-	}
-
-	return
-}
-
-// GetBatchFromUserInfoID 批量唯一主键查找
-func (obj *_UserAccountTblMgr) GetBatchFromUserInfoID(UserInfoIDs []int) (results []*UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("user_info_id IN (?)", UserInfoIDs).Find(&results).Error
+// GetBatchFromAppKey 批量唯一主键查找 authbucket_oauth2_client表的id
+func (obj *_UserAccountTblMgr) GetBatchFromAppKey(AppKeys []string) (results []*UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("app_key IN (?)", AppKeys).Find(&results).Error
 	if err == nil && obj.isRelated {
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
+				if err != nil {
+					return
+				}
+				results[i].UserInfoTbl = info
+			}
+		}
+	}
+	return
+}
+
+// GetFromUserInfoTblID 通过user_info_tbl_id获取内容
+func (obj *_UserAccountTblMgr) GetFromUserInfoTblID(UserInfoTblID int) (results []*UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("user_info_tbl_id = ?", UserInfoTblID).Find(&results).Error
+	if err == nil && obj.isRelated {
+		for i := 0; i < len(results); i++ {
+			{
+				var info UserInfoTbl // 用户信息
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
+				if err != nil {
+					return
+				}
+				results[i].UserInfoTbl = info
+			}
+		}
+	}
+	return
+}
+
+// GetBatchFromUserInfoTblID 批量唯一主键查找
+func (obj *_UserAccountTblMgr) GetBatchFromUserInfoTblID(UserInfoTblIDs []int) (results []*UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("user_info_tbl_id IN (?)", UserInfoTblIDs).Find(&results).Error
+	if err == nil && obj.isRelated {
+		for i := 0; i < len(results); i++ {
+			{
+				var info UserInfoTbl // 用户信息
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -382,7 +384,7 @@ func (obj *_UserAccountTblMgr) GetFromRegTime(RegTime time.Time) (results []*Use
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -400,7 +402,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromRegTime(RegTimes []time.Time) (result
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -412,20 +414,19 @@ func (obj *_UserAccountTblMgr) GetBatchFromRegTime(RegTimes []time.Time) (result
 }
 
 // GetFromRegIP 通过reg_ip获取内容
-func (obj *_UserAccountTblMgr) GetFromRegIP(RegIP string) (results []*UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("reg_ip = ?", RegIP).Find(&results).Error
+func (obj *_UserAccountTblMgr) GetFromRegIP(RegIP string) (result UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("reg_ip = ?", RegIP).Find(&result).Error
 	if err == nil && obj.isRelated {
-		for i := 0; i < len(results); i++ {
-			{
-				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
-				if err != nil {
-					return
-				}
-				results[i].UserInfoTbl = info
+		{
+			var info UserInfoTbl // 用户信息
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
+			if err != nil {
+				return
 			}
+			result.UserInfoTbl = info
 		}
 	}
+
 	return
 }
 
@@ -436,7 +437,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromRegIP(RegIPs []string) (results []*Us
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -454,7 +455,7 @@ func (obj *_UserAccountTblMgr) GetFromBundleID(BundleID string) (results []*User
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -472,7 +473,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromBundleID(BundleIDs []string) (results
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -490,7 +491,7 @@ func (obj *_UserAccountTblMgr) GetFromDescrib(Describ string) (results []*UserAc
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -508,7 +509,7 @@ func (obj *_UserAccountTblMgr) GetBatchFromDescrib(Describs []string) (results [
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}
@@ -527,7 +528,7 @@ func (obj *_UserAccountTblMgr) FetchByPrimaryKey(ID int) (result UserAccountTbl,
 	if err == nil && obj.isRelated {
 		{
 			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
 			if err != nil {
 				return
 			}
@@ -538,13 +539,13 @@ func (obj *_UserAccountTblMgr) FetchByPrimaryKey(ID int) (result UserAccountTbl,
 	return
 }
 
-// FetchByUnique primay or index 获取唯一内容
-func (obj *_UserAccountTblMgr) FetchByUnique(Account string) (result UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("account = ?", Account).Find(&result).Error
+// FetchByAccountUniqueIndex primay or index 获取唯一内容
+func (obj *_UserAccountTblMgr) FetchByAccountUniqueIndex(Account string, RegIP string) (result UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("account = ? AND reg_ip = ?", Account, RegIP).Find(&result).Error
 	if err == nil && obj.isRelated {
 		{
 			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
+			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoTblID).Find(&info).Error
 			if err != nil {
 				return
 			}
@@ -555,31 +556,14 @@ func (obj *_UserAccountTblMgr) FetchByUnique(Account string) (result UserAccount
 	return
 }
 
-// FetchByUNIQ5696AD037D3656A4UniqueIndex primay or index 获取唯一内容
-func (obj *_UserAccountTblMgr) FetchByUNIQ5696AD037D3656A4UniqueIndex(AppKey string, UserInfoID int) (result UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("app_key = ? AND user_info_id = ?", AppKey, UserInfoID).Find(&result).Error
-	if err == nil && obj.isRelated {
-		{
-			var info UserInfoTbl // 用户信息
-			err = obj.DB.New().Table("user_info_tbl").Where("id = ?", result.UserInfoID).Find(&info).Error
-			if err != nil {
-				return
-			}
-			result.UserInfoTbl = info
-		}
-	}
-
-	return
-}
-
-// FetchByIndex  获取多个内容
-func (obj *_UserAccountTblMgr) FetchByIndex(UserInfoID int) (results []*UserAccountTbl, err error) {
-	err = obj.DB.Table(obj.GetTableName()).Where("user_info_id = ?", UserInfoID).Find(&results).Error
+// FetchByUserInfoIDIndex  获取多个内容
+func (obj *_UserAccountTblMgr) FetchByUserInfoIDIndex(UserInfoTblID int, RegIP string) (results []*UserAccountTbl, err error) {
+	err = obj.DB.Table(obj.GetTableName()).Where("user_info_tbl_id = ? AND reg_ip = ?", UserInfoTblID, RegIP).Find(&results).Error
 	if err == nil && obj.isRelated {
 		for i := 0; i < len(results); i++ {
 			{
 				var info UserInfoTbl // 用户信息
-				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoID).Find(&info).Error
+				err = obj.DB.New().Table("user_info_tbl").Where("id = ?", results[i].UserInfoTblID).Find(&info).Error
 				if err != nil {
 					return
 				}

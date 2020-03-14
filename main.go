@@ -7,7 +7,6 @@ import (
 
 	"github.com/xxjwxc/public/mydoc/myswagger"
 
-	models "gmsec/internal/model"
 	_ "gmsec/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
 	"gmsec/config"
@@ -20,10 +19,8 @@ import (
 
 // ReqTest demo struct
 type ReqTest struct {
-	AccessToken *models.Oauth2AccessToken  `json:"access_token"`
-	UserName    int32                      `json:"user_name" binding:"required" default:"aaaaaa"` // 带校验方式
-	Password    []string                   `json:"password"`
-	Mod         []models.Oauth2AccessToken `json:"mod"`
+	UserName int32    `json:"user_name" binding:"required" default:"aaaaaa"` // 带校验方式
+	Password []string `json:"password"`
 	// 测试1111
 	Hell Hello `json:"hellxxjwo"` // 测试
 }
@@ -42,21 +39,6 @@ func (s *Hello) Block(c *api.Context, req *ReqTest) (*ReqTest, error) {
 	return nil, nil
 }
 
-// MySql2 不带注解路由(参数为2默认post)
-func (s *Hello) MySql2(c *gin.Context, req models.Oauth2AccessToken) (*models.Oauth2ClientTbl, error) {
-	fmt.Println(req)
-	fmt.Println(s.Index)
-	c.JSON(http.StatusOK, "ok")
-	return nil, nil
-}
-
-// // Block3 带自定义context跟已解析的req参数回调方式,err,resp 返回模式
-// func (s *Hello) Block3(c *gin.Context, req ReqTest) (*ReqTest, error) {
-// 	fmt.Println(req)
-// 	//c.JSON(http.StatusOK, req)
-// 	return &req, nil
-// }
-
 //TestFun6 带自定义context跟已解析的req参数回调方式,err,resp 返回模式
 func TestFun6(c *gin.Context, req ReqTest) (*ReqTest, error) {
 	fmt.Println(req)
@@ -66,26 +48,6 @@ func TestFun6(c *gin.Context, req ReqTest) (*ReqTest, error) {
 
 // CallBack service call backe
 func CallBack() {
-
-	// debug test
-	// wp := workpool.New(1000)    // Set the maximum number of threads
-	// for i := 0; i < 2000; i++ { // Open 20 requests
-	// 	wp.Do(func() error {
-	// 		orm := core.Dao.GetDBr()
-	// 		var ut []model.UserInfoTbl
-	// 		err := orm.Table("user_info_tbl").Find(&ut).Error
-	// 		if err != nil {
-	// 			fmt.Println(err.Error())
-	// 			return err
-	// 		}
-	// 		fmt.Println(tools.GetJSONStr(ut, true))
-	// 		return nil
-	// 	})
-	// }
-
-	// wp.Wait()
-	// fmt.Println("down")
-
 	// swagger
 	myswagger.SetHost("https://localhost:8080")
 	myswagger.SetBasePath("gmsec")

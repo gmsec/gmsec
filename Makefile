@@ -4,7 +4,8 @@ all: # 构建
 run:
 	make clear
 	./tools/gormt -o internal/model
-	go run ./main.go
+	go build -o $(NAME) main.go 
+	./$(NAME) debug
 windows:
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o $(NAME).exe main.go 
 mac:

@@ -1,0 +1,86 @@
+
+
+## [Viewing tools](https://www.iminho.me/)
+
+## Overview:
+- [Hello]
+- [Waiting to write...]
+
+--------------------
+
+#### Brief description:
+
+- [带注解路由(参考beego形式)]
+
+#### Request URL:
+
+- xxjwxc/block
+
+#### Methods:
+
+- post
+- get
+
+#### Parameters:
+
+- ` ReqTest ` : demo struct
+
+|Parameter| Requierd | Type | Description|
+|:----    |:---|:----- |-----   |
+|`user_name` | `YES`|int32|带校验方式   |
+|`password` | NO|[]string|   |
+|`hellxxjwo` | NO|`main.Hello`|测试// 测试1111   |
+	
+
+#### Request example:
+```
+{
+     "hellxxjwo": {
+          "Index": 0
+     },
+     "password": [
+          ""
+     ],
+     "user_name": 0
+}
+```
+
+#### Return parameter description:
+$oem.RespTab
+
+#### Return example:
+	
+```
+{
+     "hellxxjwo": {
+          "Index": 0
+     },
+     "password": [
+          ""
+     ],
+     "user_name": 0
+}
+```
+
+#### Remarks:
+
+- 带注解路由(参考beego形式)
+	
+
+--------------------
+--------------------
+
+#### Custom type:
+
+#### ` main `
+
+
+- ` Hello ` : ...
+
+|Parameter| Requierd | Type | Description|
+|:----    |:---|:----- |-----   |
+|`Index` | NO|int|   |
+	
+
+	
+

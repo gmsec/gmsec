@@ -6,6 +6,7 @@
 # gmsec 基于[ginprc](https://github.com/xxjwxc/ginrpc) 实现微服务架构集
 
 ![img](/image/ginrpc.gif)
+![doc][/image/ginrpc_doc.gif]
 
 ## 目标 
 - 实现一套快捷且方便的微服务框架

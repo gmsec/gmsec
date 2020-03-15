@@ -1,9 +1,14 @@
 NAME := gmsec
 all: # 构建
 	make clear
-run:
+build:
 	make clear
 	./tools/gormt -o internal/model
+	go build -o $(NAME) main.go 
+	./$(NAME) debug
+run:
+	# make clear
+	# ./tools/gormt -o internal/model
 	go build -o $(NAME) main.go 
 	./$(NAME) debug
 windows:

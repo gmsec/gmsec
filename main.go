@@ -5,15 +5,16 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/xxjwxc/public/mydoc/myswagger"
+	"github.com/xxjwxc/public/dev"
 
-	_ "gmsec/routers" // debug模式需要添加[mod]/routers 注册注解路由
-
-	"gmsec/config"
+	"gmsec/internal/config"
+	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
 	"github.com/gin-gonic/gin"
 	"github.com/xxjwxc/ginrpc"
 	"github.com/xxjwxc/ginrpc/api"
+	"github.com/xxjwxc/public/myast"
+	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
 )
 
@@ -54,9 +55,15 @@ func CallBack() {
 	myswagger.SetSchemes(true, false)
 	// -----end --
 
+	_, modFile, isFind := myast.GetModuleInfo(0)
+	outdir := ""
+	if isFind {
+		outdir = modFile + "/internal/routers"
+	}
+
 	base := ginrpc.New(ginrpc.WithCtx(func(c *gin.Context) interface{} {
 		return api.NewCtx(c)
-	}), ginrpc.WithDebug(true), ginrpc.WithGroup("xxjwxc"))
+	}), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithOutPath(outdir), ginrpc.WithGroup("xxjwxc"))
 	router := gin.Default()
 
 	h := new(Hello)

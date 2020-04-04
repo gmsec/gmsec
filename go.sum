@@ -181,6 +181,8 @@ github.com/xxjwxc/ginrpc v0.0.0-20200329142927-42eb04ff171c h1:DXbcY0dwg5A6a6A71
 github.com/xxjwxc/ginrpc v0.0.0-20200329142927-42eb04ff171c/go.mod h1:Zh40QpGpAQEKFfSVjSpU4wZVKw2KuHEdpaatfbIm1uk=
 github.com/xxjwxc/ginrpc v0.0.0-20200404120403-15ff885ccd90 h1:tbLQX/dKCbhdBBe3G/gdM7PDmxu/aoyZ3ZBsry70Bbc=
 github.com/xxjwxc/ginrpc v0.0.0-20200404120403-15ff885ccd90/go.mod h1:Zh40QpGpAQEKFfSVjSpU4wZVKw2KuHEdpaatfbIm1uk=
+github.com/xxjwxc/ginrpc v0.0.0-20200404161015-c2316da8cd79 h1:VXIRwJXCp/pkjY68rhSv+7tJ28KEMLHBbenFV+Dp32Y=
+github.com/xxjwxc/ginrpc v0.0.0-20200404161015-c2316da8cd79/go.mod h1:EAQAHf65mdXOhq4lTnEk0lbbRzW0Bke0G3I9JSQva9U=
 github.com/xxjwxc/ginrpc v1.0.0 h1:087vruldArvo/PKuUHcEh0XNP+qpK4Gpsc6jVZ74B04=
 github.com/xxjwxc/ginrpc v1.0.0/go.mod h1:hNHJrrRTyRBj60OtexdqzMgIyliKJhXNVSaqn9nkRbU=
 github.com/xxjwxc/public v0.0.0-20200329130606-2b6bdf6dc342 h1:qHG/g/AaeBKx+8XiGr5QTYIOoTojfea9ikTCqdYuAEs=
@@ -189,6 +191,8 @@ github.com/xxjwxc/public v0.0.0-20200404122656-65f28d4ee136 h1:2lXUXIGGHbKOJYCYJ
 github.com/xxjwxc/public v0.0.0-20200404122656-65f28d4ee136/go.mod h1:8c3gMuRJkSGX3DpDvxU0fWfEEbuMi1LxPsKEBp97dnc=
 github.com/xxjwxc/public v0.0.0-20200404123024-64642babd905 h1:vkAFKUVcBJ41oqtjd8Gm5NXKFO8DFGF1y61HciF8k0o=
 github.com/xxjwxc/public v0.0.0-20200404123024-64642babd905/go.mod h1:8c3gMuRJkSGX3DpDvxU0fWfEEbuMi1LxPsKEBp97dnc=
+github.com/xxjwxc/public v0.0.0-20200404160659-dac863cdb327 h1:wuMzNT3dSdHCSErWGIlBLDSpLILHf9z2ZOCQUzySGj4=
+github.com/xxjwxc/public v0.0.0-20200404160659-dac863cdb327/go.mod h1:8c3gMuRJkSGX3DpDvxU0fWfEEbuMi1LxPsKEBp97dnc=
 go.opencensus.io v0.20.1/go.mod h1:6WKK9ahsWS3RSO+PY9ZHZUfv2irvY6gN279GOPZjmmk=
 golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=

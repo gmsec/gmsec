@@ -72,7 +72,7 @@ func CallBack() {
 	router.POST("/test6", base.HandlerFunc(TestFun6))                            // 函数注册
 	base.RegisterHandlerFunc(router, []string{"post", "get"}, "/test", TestFun6) // 多种请求方式注册
 
-	// router.Run(":8080")
+	router.Run(":8080")
 }
 
 func main() {

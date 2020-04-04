@@ -5,6 +5,6 @@ import (
 )
 
 func init() {
-	ginrpc.SetVersion(1586003407)
+	ginrpc.SetVersion(1586021212)
 	ginrpc.AddGenOne("Hello.Block", "/block", []string{"post", "get"})
 }

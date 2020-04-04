@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "gmsec/routers" // debug模式需要添加[mod]/routers 注册注解路由
+	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
 	"testing"
 
 	"github.com/gin-gonic/gin"

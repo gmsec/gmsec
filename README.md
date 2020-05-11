@@ -20,6 +20,8 @@
 ### 接入gin框架 [go-gin](https://github.com/gin-gonic/gin)
 ### 自动生成api文档[swagger](https://swagger.io/) ,[markdown/mindoc](https://www.iminho.me/)
 ### 系统服务注册 [go-service](https://github.com/xxjwxc/go-service)
+### 接入 [grpc-go](https://github.com/grpc/grpc-go)
+### 服务发现 [dns](github.com/micro/mdns)
 
 ```
 sudo ./gmsec install  #安装服务
@@ -30,8 +32,8 @@ sudo ./gmsec remove #移除服务注册
 
 
 ## 正在做
-- 接入 [grpc-go](https://github.com/grpc/grpc-go)
-- 服务发现
+- etcd 
+
 
 
 ## 欢迎一起共建共享

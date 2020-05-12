@@ -25,7 +25,7 @@ var _map = Config{}
 var configPath string
 
 func init() {
-	configPath = path.Join(tools.GetModelPath(), "conf/config.yml")
+	configPath = path.Join(tools.GetCurrentDirectory(), "conf/config.yml")
 	onInit()
 	dev.OnSetDev(_map.IsDev)
 }

@@ -10,9 +10,9 @@
 ### golang 微服务集成框架 
 
 - [grpc](https://github.com/grpc/grpc-go)
-- [gorm 自动构建](https://github.com/xxjwxc/gormt)
-- [grpc 参数自动绑定工具](https://github.com/xxjwxc/ginrpc)
-- [dns 注册发现](https://github.com/asim/mdns)
+- [gorm 自动构建(gormt)](https://github.com/xxjwxc/gormt)
+- [grpc 参数自动绑定工具(ginrpc)](https://github.com/xxjwxc/ginrpc)
+- [dns 注册发现(mdns)](https://github.com/asim/mdns)
 - [markdown/mindoc 文档自动导出](https://github.com/grpc)
 
 
@@ -145,7 +145,7 @@ func main() {
 ## 正在做
 - etcdv3
 
-- ###### [传送门](https://github.com/gmsec)
-
 
 ## 欢迎一起共建共享
+
+## [传送门](https://github.com/gmsec)

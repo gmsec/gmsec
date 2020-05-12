@@ -8,3 +8,5 @@ install:
 	./proto_install.sh
 source_install:
 	./proto_install.sh
+orm: # gormt 生成 orm代码
+	./tools/gormt -o internal/model

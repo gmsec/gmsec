@@ -34,7 +34,7 @@ func TestMain(t *testing.T) {
 	// grpc 相关 初始化服务
 	service := micro.NewService(
 		micro.WithName("lp.srv.eg1"),
-		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
+		micro.WithRegisterTTL(time.Second*30), //指定服务注册时间
 		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNameing(reg),
 	)
@@ -50,15 +50,14 @@ func TestMain(t *testing.T) {
 	base.Register(router, h) // 对象注册
 	// ------ end
 
-	plg, b := plugin.Run(plugin.WithMicro(service),
+	plg, _ := plugin.Run(plugin.WithMicro(service),
 		plugin.WithGin(router),
-		plugin.WithAddr(":82"))
+		plugin.WithAddr("localhost:8080"))
 
 	clientTest() // client test
 
-	if b == nil {
-		plg.Wait()
-	}
+	time.Sleep(3 * time.Second)
+	plg.Stop()
 	fmt.Println("done")
 }
 
@@ -71,8 +70,8 @@ func clientTest() {
 	// 	//micro.WithRegistryNameing(reg),
 	// )
 	go func() {
-		wp := workpool.New(200)     //设置最大线程数
-		for i := 0; i < 2000; i++ { //开启20个请求
+		wp := workpool.New(2)     //设置最大线程数
+		for i := 0; i < 20; i++ { //开启20个请求
 			wp.Do(func() error {
 				run()
 				return nil

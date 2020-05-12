@@ -6,6 +6,7 @@ go:
 go_import_path: github.com/xxjwxc/gmsec
 
 before_install:
+  - cd gmsec
   - go get -t -v ./...
 
 script:

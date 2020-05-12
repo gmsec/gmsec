@@ -1,49 +1,105 @@
 package main
 
 import (
-	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
+	"fmt"
+	"math/rand"
 	"testing"
+	"time"
+
+	"github.com/xxjwxc/public/dev"
+
+	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
+
+	"context"
+
+	proto "gmsec/rpc"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gmsec/goplugins/plugin"
+	"github.com/gmsec/micro"
 	"github.com/xxjwxc/ginrpc"
-	"github.com/xxjwxc/ginrpc/api"
+	"github.com/xxjwxc/gowp/workpool"
+	"github.com/xxjwxc/public/mydoc/myswagger"
 )
 
 // TestMain test main
 func TestMain(t *testing.T) {
-
-	// debug test
-	// wp := workpool.New(1000)    // Set the maximum number of threads
-	// for i := 0; i < 2000; i++ { // Open 20 requests
-	// 	wp.Do(func() error {
-	// 		orm := core.Dao.GetDBr()
-	// 		var ut []model.UserInfoTbl
-	// 		err := orm.Table("user_info_tbl").Find(&ut).Error
-	// 		if err != nil {
-	// 			fmt.Println(err.Error())
-	// 			return err
-	// 		}
-	// 		fmt.Println(tools.GetJSONStr(ut, true))
-	// 		return nil
-	// 	})
-	// }
-
-	// wp.Wait()
-	// fmt.Println("down")
-
 	// swagger
+	myswagger.SetHost("https://localhost:8080")
+	myswagger.SetBasePath("gmsec")
+	myswagger.SetSchemes(true, false)
 	// -----end --
 
+	// reg := registry.NewDNSNamingRegistry()
+	// grpc 相关 初始化服务
+	service := micro.NewService(
+		micro.WithName("lp.srv.eg1"),
+		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
+		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
+		// micro.WithRegistryNameing(reg),
+	)
+	h := new(hello)
+	proto.RegisterHelloServer(service.Server(), h) // 服务注册
+	// ----------- end
+
+	// gin restful 相关
 	base := ginrpc.New(ginrpc.WithCtx(func(c *gin.Context) interface{} {
-		return api.NewCtx(c)
-	}), ginrpc.WithDebug(true), ginrpc.WithGroup("xxjwxc"))
+		return context.Background()
+	}), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithGroup("xxjwxc"))
 	router := gin.Default()
+	base.Register(router, h) // 对象注册
+	// ------ end
 
-	h := new(Hello)
-	h.Index = 123
-	base.Register(router, h)                                                     // 对象注册
-	router.POST("/test6", base.HandlerFunc(TestFun6))                            // 函数注册
-	base.RegisterHandlerFunc(router, []string{"post", "get"}, "/test", TestFun6) // 多种请求方式注册
+	plg, b := plugin.Run(plugin.WithMicro(service),
+		plugin.WithGin(router),
+		plugin.WithAddr(":82"))
 
-	//router.Run(":8080")
+	clientTest() // client test
+
+	if b == nil {
+		plg.Wait()
+	}
+	fmt.Println("done")
+}
+
+func clientTest() {
+	// first
+	// service := micro.NewService(
+	// 	micro.WithName("lp.srv.eg1"),
+	// 	// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
+	// 	micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
+	// 	//micro.WithRegistryNameing(reg),
+	// )
+	go func() {
+		wp := workpool.New(200)     //设置最大线程数
+		for i := 0; i < 2000; i++ { //开启20个请求
+			wp.Do(func() error {
+				run()
+				return nil
+			})
+		}
+
+		wp.Wait()
+		fmt.Println("clinet down")
+	}()
+}
+
+func run() {
+	micro.SetClientServiceName(proto.GetHelloName(), "lp.srv.eg1") // set client group
+	say := proto.GetHelloClient()
+
+	var request proto.HelloRequest
+	r := rand.Intn(500)
+	request.Name = fmt.Sprintf("%v", r)
+
+	ctx := context.Background()
+
+	for i := 0; i < 10; i++ {
+		resp, err := say.SayHello(ctx, &request)
+		if err != nil {
+			fmt.Println("==========err:", err)
+		}
+		fmt.Println(resp)
+		time.Sleep(1 * time.Second)
+	}
 }

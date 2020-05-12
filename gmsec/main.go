@@ -2,50 +2,25 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"os"
+	"time"
+
+	proto "gmsec/rpc"
 
 	"github.com/xxjwxc/public/dev"
 
 	"gmsec/internal/config"
 	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
+	"context"
+
 	"github.com/gin-gonic/gin"
+	"github.com/gmsec/goplugins/plugin"
+	"github.com/gmsec/micro"
 	"github.com/xxjwxc/ginrpc"
-	"github.com/xxjwxc/ginrpc/api"
-	"github.com/xxjwxc/public/myast"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
 )
-
-// ReqTest demo struct
-type ReqTest struct {
-	UserName int32    `json:"user_name" binding:"required" default:"aaaaaa"` // 带校验方式
-	Password []string `json:"password"`
-	// 测试1111
-	Hell Hello `json:"hellxxjwo"` // 测试
-}
-
-// Hello ...
-type Hello struct {
-	Index int
-}
-
-// Block 带注解路由(参考beego形式)
-// @Router /block [post,get]
-func (s *Hello) Block(c *api.Context, req *ReqTest) (*ReqTest, error) {
-	fmt.Println(req)
-	fmt.Println(s.Index)
-	c.JSON(http.StatusOK, "ok")
-	return nil, nil
-}
-
-//TestFun6 带自定义context跟已解析的req参数回调方式,err,resp 返回模式
-func TestFun6(c *gin.Context, req ReqTest) (*ReqTest, error) {
-	fmt.Println(req)
-	//c.JSON(http.StatusOK, req)
-	return &req, nil
-}
 
 // CallBack service call backe
 func CallBack() {
@@ -55,24 +30,34 @@ func CallBack() {
 	myswagger.SetSchemes(true, false)
 	// -----end --
 
-	_, modFile, isFind := myast.GetModuleInfo(0)
-	outdir := ""
-	if isFind {
-		outdir = modFile + "/internal/routers"
-	}
+	// reg := registry.NewDNSNamingRegistry()
+	// grpc 相关 初始化服务
+	service := micro.NewService(
+		micro.WithName("lp.srv.eg1"),
+		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
+		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
+		//micro.WithRegistryNameing(reg),
+	)
+	h := new(hello)
+	proto.RegisterHelloServer(service.Server(), h) // 服务注册
+	// ----------- end
 
+	// gin restful 相关
 	base := ginrpc.New(ginrpc.WithCtx(func(c *gin.Context) interface{} {
-		return api.NewCtx(c)
-	}), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithOutPath(outdir), ginrpc.WithGroup("xxjwxc"))
+		return context.Background()
+	}), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithGroup("xxjwxc"))
 	router := gin.Default()
+	base.Register(router, h) // 对象注册
+	// ------ end
 
-	h := new(Hello)
-	h.Index = 123
-	base.Register(router, h)                                                     // 对象注册
-	router.POST("/test6", base.HandlerFunc(TestFun6))                            // 函数注册
-	base.RegisterHandlerFunc(router, []string{"post", "get"}, "/test", TestFun6) // 多种请求方式注册
+	plg, b := plugin.Run(plugin.WithMicro(service),
+		plugin.WithGin(router),
+		plugin.WithAddr(":82"))
 
-	router.Run(":8080")
+	if b == nil {
+		plg.Wait()
+	}
+	fmt.Println("done")
 }
 
 func main() {

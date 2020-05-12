@@ -22,6 +22,7 @@
 ### 系统服务注册 [go-service](https://github.com/xxjwxc/go-service)
 ### 接入 [grpc-go](https://github.com/grpc/grpc-go)
 ### 服务发现 [dns](github.com/micro/mdns)
+### 接入 [micro](https://github.com/gmsec/micro) 微服务
 
 ```
 sudo ./gmsec install  #安装服务
@@ -33,7 +34,5 @@ sudo ./gmsec remove #移除服务注册
 
 ## 正在做
 - etcd 
-
-
 
 ## 欢迎一起共建共享

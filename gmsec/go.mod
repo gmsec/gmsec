@@ -4,8 +4,8 @@ go 1.14
 
 require (
 	github.com/gin-gonic/gin v1.6.3
-	github.com/gmsec/goplugins v0.0.0-20200512093426-034218199108
-	github.com/gmsec/micro v0.0.0-20200512154223-23af306e64f0
+	github.com/gmsec/goplugins v0.0.0-20200512170621-7d971e4eeea6
+	github.com/gmsec/micro v0.0.0-20200512171333-e02c4bc357e0
 	github.com/golang/protobuf v1.4.1
 	github.com/xxjwxc/ginrpc v0.0.0-20200512081549-1dc596bb6291
 	github.com/xxjwxc/gowp v0.0.0-20200512110932-2a0c7dbb5cb8

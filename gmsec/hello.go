@@ -17,8 +17,6 @@ func (h *hello) SayHello(ctx context.Context, req *proto.HelloRequest) (*proto.H
 	md, ok := metadata.FromIncomingContext(ctx)
 	fmt.Println(md)
 	fmt.Println(ok)
-	fmt.Println(ctx.Value("HELLO"))
-	fmt.Println(ctx.Value("WROLD"))
 	fmt.Println(req)
 	return &proto.HelloReply{
 		Message: tools.GetRandomString(8),

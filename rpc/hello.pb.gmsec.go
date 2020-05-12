@@ -4,7 +4,6 @@ package proto
 
 import (
 	context "context"
-
 	micro "github.com/gmsec/micro"
 	client "github.com/gmsec/micro/client"
 	server "github.com/gmsec/micro/server"

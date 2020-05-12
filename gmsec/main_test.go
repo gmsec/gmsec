@@ -6,6 +6,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/xxjwxc/gowp/workpool"
 	"github.com/xxjwxc/public/dev"
 
 	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
@@ -18,7 +19,6 @@ import (
 	"github.com/gmsec/goplugins/plugin"
 	"github.com/gmsec/micro"
 	"github.com/xxjwxc/ginrpc"
-	"github.com/xxjwxc/gowp/workpool"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 )
 
@@ -62,6 +62,7 @@ func TestMain(t *testing.T) {
 }
 
 func clientTest() {
+	micro.SetClientServiceName(proto.GetHelloName(), "lp.srv.eg1") // set client group
 	// first
 	// service := micro.NewService(
 	// 	micro.WithName("lp.srv.eg1"),
@@ -84,21 +85,15 @@ func clientTest() {
 }
 
 func run() {
-	micro.SetClientServiceName(proto.GetHelloName(), "lp.srv.eg1") // set client group
 	say := proto.GetHelloClient()
-
 	var request proto.HelloRequest
-	r := rand.Intn(500)
-	request.Name = fmt.Sprintf("%v", r)
+	request.Name = fmt.Sprintf("%v", rand.Intn(500))
 
 	ctx := context.Background()
-
-	for i := 0; i < 10; i++ {
-		resp, err := say.SayHello(ctx, &request)
-		if err != nil {
-			fmt.Println("==========err:", err)
-		}
-		fmt.Println(resp)
-		time.Sleep(1 * time.Second)
+	resp, err := say.SayHello(ctx, &request)
+	if err != nil {
+		fmt.Println("==========err:", err)
 	}
+	fmt.Println(resp)
+	time.Sleep(1 * time.Second)
 }

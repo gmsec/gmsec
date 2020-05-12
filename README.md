@@ -83,19 +83,18 @@ func main() {
 	proto.RegisterHelloServer(service.Server(), h) // 服务注册
 	// ----------- end
 
-	// gin restful 相关
+	// gin 相关
 	base := ginrpc.New(ginrpc.WithCtx(Ctx), ginrpc.WithDebug(true), ginrpc.WithGroup("xxjwxc"))
 	router := gin.Default()  // gen 对象
 	base.Register(router, h) // genrpc对象注册
 	// ------ end
 
-	plg, b := plugin.Run(plugin.WithMicro(service),
+	plg, _ := plugin.Run(plugin.WithMicro(service),
 		plugin.WithGin(router),
 		plugin.WithAddr(":8080")) // 开始服务(公用端口)
 
-	if b == nil {
-		plg.Wait()
-	}
+	plg.Wait() // 等待结束(ctrl+c)
+
 	fmt.Println("done")
 }
 

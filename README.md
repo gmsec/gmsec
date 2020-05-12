@@ -56,7 +56,7 @@ message HelloReply {
 
 ## 服务端代码示例
 
-```
+``` go
 package main
 
 import (
@@ -71,13 +71,9 @@ import (
 )
 
 func main() {
-	// reg := registry.NewDNSNamingRegistry()
 	// grpc 相关 初始化服务
 	service := micro.NewService(
 		micro.WithName("lp.srv.eg1"),
-		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
-		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
-		// micro.WithRegistryNameing(reg),
 	)
 	h := new(hello)
 	proto.RegisterHelloServer(service.Server(), h) // 服务注册
@@ -89,15 +85,16 @@ func main() {
 	base.Register(router, h) // genrpc对象注册
 	// ------ end
 
-	plg, _ := plugin.Run(plugin.WithMicro(service),
-		plugin.WithGin(router),
-		plugin.WithAddr(":8080")) // 开始服务(公用端口)
-
-	plg.Wait() // 等待结束(ctrl+c)
-
+	plg, _ := plugin.Run(plugin.WithMicro(service),// grpc 入口
+		plugin.WithGin(router), // http 入口
+        plugin.WithAddr(":8080")) // 开始服务(公用端口)
+    
+    plg.Wait() // 等待结束(ctrl+c)
+    
 	fmt.Println("done")
 }
 
+// Ctx gin.Context 到 context.Context 的转换
 func Ctx(c *gin.Context) interface{} {
 	return context.Background()
 }
@@ -105,7 +102,7 @@ func Ctx(c *gin.Context) interface{} {
 
 ## 客户端代码:
 
-```
+``` go
 package main
 
 import (
@@ -114,27 +111,22 @@ import (
 	proto "gmsec/rpc"
 
 	"github.com/gmsec/micro"
-	// "github.com/gmsec/micro/registry"
 )
 
 func main() {
-	// reg := registry.NewDNSNamingRegistry()
+    // reg := registry.NewDNSNamingRegistry()
 	// grpc 相关 注册服务发现等
 	micro.NewService(
-		micro.WithName("lp.srv.eg1"),
-		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
+        micro.WithName("lp.srv.eg1"),
+        // micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
 		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNameing(reg),
 	)
 	// ----------- end
 
-	micro.SetClientServiceName(proto.GetHelloName(), "lp.srv.eg1") // set client group
 	say := proto.GetHelloClient()
-
-	var request proto.HelloRequest
-	request.Name = "xxjwxc"
 	ctx := context.Background()
-	resp, _ := say.SayHello(ctx, &request)
+	resp, _ := say.SayHello(ctx, &proto.HelloRequest{Name:"xxjwxc"})
 	fmt.Println("result:", resp)
 }
 ```

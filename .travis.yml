@@ -3,7 +3,7 @@ go:
   - 1.13.x
   - master
   
-go_import_path: github.com/xxjwxc/gmsec
+go_import_path: github.com/gmsec/gmsec
 
 before_install:
   - cd gmsec

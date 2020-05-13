@@ -6,6 +6,11 @@
 
 # [gmsec](https://github.com/gmsec/gmsec)
 
+### 特点
+
+- 打通grpc + gin，同时支持grpc 跟 restful 模式
+- grpc , gin 公用端口
+- gorm 嵌入，自动数据库代码生成
 
 ### golang 微服务集成框架 
 

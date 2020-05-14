@@ -7,7 +7,7 @@ require (
 	github.com/gmsec/goplugins v0.0.0-20200512170621-7d971e4eeea6
 	github.com/gmsec/micro v0.0.0-20200512171333-e02c4bc357e0
 	github.com/golang/protobuf v1.4.1
-	github.com/xxjwxc/ginrpc v0.0.0-20200512081549-1dc596bb6291
+	github.com/xxjwxc/ginrpc v0.0.0-20200513173523-76244eb25d46
 	github.com/xxjwxc/gowp v0.0.0-20200512110932-2a0c7dbb5cb8
 	github.com/xxjwxc/public v0.0.0-20200512075732-ac398d0e55d0
 	google.golang.org/grpc v1.29.1

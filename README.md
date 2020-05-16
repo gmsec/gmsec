@@ -94,7 +94,7 @@ func main() {
 		plugin.WithGin(router), // http 入口
         plugin.WithAddr(":8080")) // 开始服务(公用端口)
     
-    plg.Wait() // 等待结束(ctrl+c)
+	plg.Wait() // 等待结束(ctrl+c)
     
 	fmt.Println("done")
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
-	proto "gmsec/rpc"
+	proto "github.com/gmsec/gmsec/rpc"
 
 	"github.com/xxjwxc/public/tools"
 

@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	proto "gmsec/rpc"
+	proto "github.com/gmsec/gmsec/rpc"
 
 	"github.com/xxjwxc/public/dev"
 

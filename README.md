@@ -142,6 +142,4 @@ func main() {
 - etcdv3 
 
 
-## 欢迎一起共建共享
-
 ## [传送门](https://github.com/gmsec)

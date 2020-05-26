@@ -30,6 +30,8 @@ github.com/gin-contrib/sse v0.1.0 h1:Y/yl/+YNO8GZSjAhjMsSuLt29uWRFHdHYUb5lYOV9qE
 github.com/gin-contrib/sse v0.1.0/go.mod h1:RHrZQHXnP2xjPF+u1gW/2HnVO7nvIa9PG3Gm+fLHvGI=
 github.com/gin-gonic/gin v1.6.3 h1:ahKqKTFpO5KTPHxWZjEdPScmYaGtLo8Y4DMHoEsnp14=
 github.com/gin-gonic/gin v1.6.3/go.mod h1:75u5sXoLsGZoRN5Sgbi1eraJ4GU3++wFwWzhwvtwp4M=
+github.com/gmsec/gmsec v0.0.0-20200516110103-d523c5e963e4 h1:6d+g9n4END8hOTmWKZvYXaA7JI9vOfJY63kYnyZe7uI=
+github.com/gmsec/gmsec v0.0.0-20200516110103-d523c5e963e4/go.mod h1:BXI4GvIfCnQ7Izs7tKGoe/3m36XhgstvDwBXUqWwhe4=
 github.com/gmsec/goplugins v0.0.0-20200512170621-7d971e4eeea6 h1:iCWzc/3Knyj7AEcDujZEKUoS4FL3hDENhk7B/eMQ+VU=
 github.com/gmsec/goplugins v0.0.0-20200512170621-7d971e4eeea6/go.mod h1:HumjBltVYT0U23Xv6+KAGQwK2q7jRsRVVDotOxQbOC4=
 github.com/gmsec/micro v0.0.0-20200512170207-8dff54fc0fa7 h1:j1h/OE4RN3mYUoLRpcLDd+przhFVmeHEbAq18xBqCNM=

@@ -67,7 +67,7 @@ package main
 import (
 	"context"
 	"fmt"
-	proto "github.com/gmsec/gmsec/rpc"
+	proto "github.com/gmsec/gmsec/common/proto"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"
@@ -113,7 +113,7 @@ package main
 import (
 	"context"
 	"fmt"
-	proto "github.com/gmsec/gmsec/rpc"
+	proto "github.com/gmsec/gmsec/common/proto"
 
 	"github.com/gmsec/micro"
 )

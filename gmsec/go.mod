@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/gin-gonic/gin v1.6.3
-	github.com/gmsec/gmsec v0.0.0-20200516110103-d523c5e963e4
+	github.com/gmsec/gmsec v0.0.0-20200516110103-d523c5e963e4 // indirect
 	github.com/gmsec/goplugins v0.0.0-20200512170621-7d971e4eeea6
 	github.com/gmsec/micro v0.0.0-20200512171333-e02c4bc357e0
 	github.com/golang/protobuf v1.4.1 // indirect
@@ -14,7 +14,10 @@ require (
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200506231410-2ff61e1afc86
+	github.com/gmsec/gmsec/common latest
 )
+
+replace github.com/gmsec/gmsec/common latest => ../common
 
 // replace github.com/xxjwxc/public => ../../public
 

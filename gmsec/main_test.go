@@ -13,7 +13,7 @@ import (
 
 	"context"
 
-	proto "github.com/gmsec/gmsec/rpc"
+	proto "github.com/gmsec/gmsec/common/proto"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"

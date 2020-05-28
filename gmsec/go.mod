@@ -14,10 +14,10 @@ require (
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200506231410-2ff61e1afc86
-	github.com/gmsec/gmsec/common latest
+	github.com/gmsec/gmsec/common v0.0.0-00010101000000-000000000000
 )
 
-replace github.com/gmsec/gmsec/common latest => ../common
+replace github.com/gmsec/gmsec/common => ../common
 
 // replace github.com/xxjwxc/public => ../../public
 

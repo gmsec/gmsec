@@ -10,7 +10,6 @@ import (
 	"github.com/xxjwxc/public/dev"
 
 	"gmsec/internal/config"
-	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
 	"github.com/gmsec/goplugins/api"
 

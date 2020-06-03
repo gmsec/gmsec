@@ -69,6 +69,7 @@ import (
 	"fmt"
 	proto "gmsec/rpc/gmsec"
 
+	"github.com/gmsec/goplugins/api"
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"
 	"github.com/gmsec/micro"

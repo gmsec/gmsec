@@ -18,7 +18,7 @@ jobs:
 
     - name: Get dependencies
       run: |
-        cd ./gmsec
+        cd ./example
         go get -v -t -d ./...
         if [ -f Gopkg.toml ]; then
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
@@ -26,4 +26,4 @@ jobs:
         fi
 
     - name: Build
-      run: cd ./gmsec && go build -v .
+      run: cd ./example && go build -v .

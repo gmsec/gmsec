@@ -67,7 +67,7 @@ package main
 import (
 	"context"
 	"fmt"
-	proto "github.com/gmsec/gmsec/common/proto"
+	proto "gmsec/rpc/gmsec"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"
@@ -85,9 +85,10 @@ func main() {
 	// ----------- end
 
 	// gin 相关
-	base := ginrpc.New(ginrpc.WithCtx(Ctx), ginrpc.WithDebug(true), ginrpc.WithGroup("xxjwxc"))
-	router := gin.Default()  // gen 对象
-	base.Register(router, h) // genrpc对象注册
+	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithDebug(dev.IsDev()))
+	router := gin.Default()
+	v1 := router.Group("/xxjwxc/api/v1")
+	base.Register(v1, h) // 对象注册
 	// ------ end
 
 	plg, _ := plugin.Run(plugin.WithMicro(service),// grpc 入口
@@ -113,7 +114,7 @@ package main
 import (
 	"context"
 	"fmt"
-	proto "github.com/gmsec/gmsec/common/proto"
+	proto "gmsec/rpc/gmsec"
 
 	"github.com/gmsec/micro"
 )

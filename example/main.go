@@ -5,14 +5,14 @@ import (
 	"os"
 	"time"
 
-	proto "github.com/gmsec/gmsec/common/proto"
+	proto "gmsec/rpc/example"
 
 	"github.com/xxjwxc/public/dev"
 
 	"gmsec/internal/config"
 	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
 
-	"context"
+	"github.com/gmsec/goplugins/api"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"
@@ -43,11 +43,10 @@ func CallBack() {
 	// ----------- end
 
 	// gin restful 相关
-	base := ginrpc.New(ginrpc.WithCtx(func(c *gin.Context) interface{} {
-		return context.Background()
-	}), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithGroup("xxjwxc"))
+	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithDebug(dev.IsDev()))
 	router := gin.Default()
-	base.Register(router, h) // 对象注册
+	v1 := router.Group("/xxjwxc/api/v1")
+	base.Register(v1, h) // 对象注册
 	// ------ end
 
 	plg, b := plugin.Run(plugin.WithMicro(service),

@@ -9,13 +9,12 @@ import (
 	"github.com/xxjwxc/gowp/workpool"
 	"github.com/xxjwxc/public/dev"
 
-	_ "gmsec/internal/routers" // debug模式需要添加[mod]/routers 注册注解路由
-
 	"context"
 
-	proto "github.com/gmsec/gmsec/common/proto"
+	proto "gmsec/rpc/example"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gmsec/goplugins/api"
 	"github.com/gmsec/goplugins/plugin"
 	"github.com/gmsec/micro"
 	"github.com/xxjwxc/ginrpc"
@@ -33,7 +32,7 @@ func TestServer(m *testing.T) {
 	// reg := registry.NewDNSNamingRegistry()
 	// grpc 相关 初始化服务
 	service := micro.NewService(
-		micro.WithName("lp.srv.eg1"),
+		micro.WithName("xxjwxc.lp.srv.eg1"),
 		micro.WithRegisterTTL(time.Second*30), //指定服务注册时间
 		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNameing(reg),
@@ -43,11 +42,10 @@ func TestServer(m *testing.T) {
 	// ----------- end
 
 	// gin restful 相关
-	base := ginrpc.New(ginrpc.WithCtx(func(c *gin.Context) interface{} {
-		return context.Background()
-	}), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithGroup("xxjwxc"))
+	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithDebug(dev.IsDev()))
 	router := gin.Default()
-	base.Register(router, h) // 对象注册
+	v1 := router.Group("/xxjwxc/api/v1")
+	base.Register(v1, h) // 对象注册
 	// ------ end
 
 	plg, _ := plugin.Run(plugin.WithMicro(service),

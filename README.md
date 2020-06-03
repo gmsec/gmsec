@@ -137,7 +137,7 @@ func main() {
 }
 ```
 
-## 更多示例 => [传送门](https://github.com/gmsec/gmsec/tree/master/gmsec)
+## 更多示例 => [传送门](https://github.com/gmsec/gmsec/tree/master/example)
 
 ## 正在做
 - etcdv3 

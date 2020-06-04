@@ -35,7 +35,7 @@ func TestServer(m *testing.T) {
 		micro.WithName("xxjwxc.lp.srv.eg1"),
 		micro.WithRegisterTTL(time.Second*30), //指定服务注册时间
 		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
-		// micro.WithRegistryNameing(reg),
+		// micro.WithRegistryNaming(reg),
 	)
 	h := new(hello)
 	proto.RegisterHelloServer(service.Server(), h) // 服务注册
@@ -66,7 +66,7 @@ func TestClient(m *testing.T) {
 		micro.WithName("lp.srv.eg1"),
 		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
 		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
-		//micro.WithRegistryNameing(reg),
+		//micro.WithRegistryNaming(reg),
 	)
 	wp := workpool.New(2)     //设置最大线程数
 	for i := 0; i < 20; i++ { //开启20个请求

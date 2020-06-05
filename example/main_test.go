@@ -30,6 +30,11 @@ func TestServer(m *testing.T) {
 	// -----end --
 
 	// reg := registry.NewDNSNamingRegistry()
+	// reg := etcdv3.NewEtcdv3NamingRegistry(clientv3.Config{
+	// 	Endpoints:   []string{"127.0.0.1:2379"},
+	// 	DialTimeout: time.Second * 3,
+	// })
+
 	// grpc 相关 初始化服务
 	service := micro.NewService(
 		micro.WithName("xxjwxc.lp.srv.eg1"),
@@ -52,7 +57,7 @@ func TestServer(m *testing.T) {
 		plugin.WithGin(router),
 		plugin.WithAddr("localhost:8080"))
 	defer plg.Stop()
-	// TestClient() // client test
+	TestClient(m) // client test
 	plg.Wait()
 	/*time.Sleep(3 * time.Second)
 	plg.Stop()
@@ -60,15 +65,19 @@ func TestServer(m *testing.T) {
 }
 
 func TestClient(m *testing.T) {
-	micro.SetClientServiceName(proto.GetHelloName(), "lp.srv.eg1") // set client group
+	micro.SetClientServiceName(proto.GetHelloName(), "xxjwxc.lp.srv.eg1") // set client group
 	// first
-	micro.NewService(
-		micro.WithName("lp.srv.eg1"),
-		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
-		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
-		//micro.WithRegistryNaming(reg),
-	)
-	wp := workpool.New(2)     //设置最大线程数
+	// reg := etcdv3.NewEtcdv3NamingRegistry(clientv3.Config{
+	// 	Endpoints:   []string{"127.0.0.1:2379"},
+	// 	DialTimeout: time.Second * 3,
+	// })
+	// micro.NewService(
+	// 	micro.WithName("xxjwxc2.lp.srv.eg1"),
+	// 	// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
+	// 	micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
+	// 	micro.WithRegistryNaming(reg),
+	// )
+	wp := workpool.New(20)    //设置最大线程数
 	for i := 0; i < 20; i++ { //开启20个请求
 		wp.Do(func() error {
 			say := proto.GetHelloClient()
@@ -85,18 +94,19 @@ func TestClient(m *testing.T) {
 		})
 	}
 	wp.Wait()
+	fmt.Println("=====done")
 }
 
-func run() {
-	say := proto.GetHelloClient()
-	var request proto.HelloRequest
-	request.Name = fmt.Sprintf("%v", rand.Intn(500))
+// func run() {
+// 	say := proto.GetHelloClient()
+// 	var request proto.HelloRequest
+// 	request.Name = fmt.Sprintf("%v", rand.Intn(500))
 
-	ctx := context.Background()
-	resp, err := say.SayHello(ctx, &request)
-	if err != nil {
-		fmt.Println("==========err:", err)
-	}
-	fmt.Println(resp)
-	time.Sleep(1 * time.Second)
-}
+// 	ctx := context.Background()
+// 	resp, err := say.SayHello(ctx, &request)
+// 	if err != nil {
+// 		fmt.Println("==========err:", err)
+// 	}
+// 	fmt.Println(resp)
+// 	time.Sleep(1 * time.Second)
+// }

@@ -7,73 +7,13 @@
      },
      "host": "localhost:8080",
      "basePath": "/gmsec",
-     "tags": [
-          {
-               "name": "hello",
-               "description": ""
-          }
-     ],
+     "tags": null,
      "schemes": [
           "http"
      ],
-     "paths": {
-          "/xxjwxc/api/v1/hello.say_hello": {
-               "post": {
-                    "tags": [
-                         "hello"
-                    ],
-                    "summary": "",
-                    "description": "",
-                    "consumes": [
-                         "application/json",
-                         "application/xml"
-                    ],
-                    "produces": [
-                         "application/json",
-                         "application/xml"
-                    ],
-                    "parameters": [
-                         {
-                              "in": "body",
-                              "name": "body",
-                              "description": "",
-                              "required": true,
-                              "schema": {
-                                   "$ref": "#/definitions/HelloRequest"
-                              }
-                         }
-                    ],
-                    "responses": {
-                         "400": {
-                              "description": "v"
-                         },
-                         "404": {
-                              "description": "not found"
-                         },
-                         "405": {
-                              "description": "Validation exception"
-                         }
-                    }
-               }
-          }
-     },
+     "paths": {},
      "securityDefinitions": {},
-     "definitions": {
-          "HelloRequest": {
-               "type": "object",
-               "properties": {
-                    "name": {
-                         "type": "string",
-                         "format": "string",
-                         "description": "名字"
-                    }
-               },
-               "xml": {
-                    "name": "",
-                    "wrapped": false
-               }
-          }
-     },
+     "definitions": null,
      "externalDocs": {
           "description": "Find out more about Swagger",
           "url": "https://github.com/xxjwxc/public"

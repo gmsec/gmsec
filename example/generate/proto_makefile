@@ -1,0 +1,17 @@
+NAME := example
+gen_proto: gen_build gen_base
+clean_proto:
+	rm -f rpc/commcn/*.pb.go
+gen_build:
+	@mkdir -p rpc/$(NAME)
+	@echo "gen proto"
+	@rm -f rpc/$(NAME)/*.pb.go
+	@rm -f rpc/$(NAME)/*.pb.gmsec.go
+	@protoc --proto_path="../apidoc/proto/" --gmsec_out=plugins=gmsec:./rpc/$(NAME)/ $(NAME)/hello.proto
+gen_base:
+	@mkdir -p rpc/common
+	@echo "gen proto"
+	@rm -f rpc/common/*.pb.go
+	@rm -f rpc/common/*.pb.gmsec.go
+	@protoc --proto_path="../apidoc/proto/" --gmsec_out=plugins=gmsec:../../  common/common_public.proto
+

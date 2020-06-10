@@ -1,6 +1,7 @@
 syntax = "proto3"; // 指定proto版本
 
 package proto;     // 指定包名
+import "common/common_public.proto";
 
 option go_package = ".;example"; // 指定路径
 
@@ -18,4 +19,5 @@ message HelloRequest {
 // HelloReply 响应结构
 message HelloReply {
     string message = 1; // 消息
+    common.ResultResp result = 2;// 多proto 文件样例
 }

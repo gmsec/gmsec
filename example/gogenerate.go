@@ -1,5 +1,5 @@
 package main
 
-//go:generate make mac
-//go:generate make windows
-//go:generate make linux
+// 编译所有
+//go:generate make -s -f generate/proto_makefile
+//   go:generate make gen_proto -f generate/proto_makefile //部分

@@ -1,0 +1,13 @@
+syntax = "proto3"; // 指定proto版本
+
+package common;     // 指定包名
+
+// import "google/protobuf/descriptor.proto";
+
+// option go_package = "common;common"; // 指定路径
+option go_package = "gmsec/rpc/common";
+
+message ResultResp {
+	bool result = 1;
+	string msg = 2;
+}

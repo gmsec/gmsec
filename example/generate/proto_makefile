@@ -13,5 +13,5 @@ gen_base:
 	@echo "gen proto"
 	@rm -f rpc/common/*.pb.go
 	@rm -f rpc/common/*.pb.gmsec.go
-	@protoc --proto_path="../apidoc/proto/" --gmsec_out=plugins=gmsec:../../  common/common_public.proto
+	@protoc --proto_path="../apidoc/proto/" --gmsec_out=plugins=gmsec:../../ common/common_public.proto
 

@@ -4,7 +4,7 @@ all: # 构建
 gen:
 	- mkdir ../rpc
 	- mkdir ./rpc/$(SaverName)
-	- ln -s ../rpc ./
+	test -L rpc || ln -s ../rpc ./
 	protoc --proto_path="../apidoc/proto/$(SaverName)/" --gmsec_out=plugins=gmsec:./rpc/$(SaverName) hello.proto
 orm: # gormt 生成 orm代码
 	./tools/gormt -o internal/model

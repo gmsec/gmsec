@@ -20,5 +20,7 @@ rm -rf ./protobuf.tar.gz
 go get -u google.golang.org/grpc
 go get -u github.com/gmsec/protoc-gen-gmsec
 
+chmod +x $GOPATH/bin/protoc
+
 echo "SUCCESS"
 #end

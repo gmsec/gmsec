@@ -32,7 +32,7 @@ type HelloRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"` // 名字
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name"` // 名字
 }
 
 func (x *HelloRequest) Reset() {
@@ -80,8 +80,8 @@ type HelloReply struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Message string             `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"` // 消息
-	Result  *common.ResultResp `protobuf:"bytes,2,opt,name=result,proto3" json:"result,omitempty"`   // 多proto 文件样例
+	Message string             `protobuf:"bytes,1,opt,name=message,proto3" json:"message"` // 消息
+	Result  *common.ResultResp `protobuf:"bytes,2,opt,name=result,proto3" json:"result"`   // 多proto 文件样例
 }
 
 func (x *HelloReply) Reset() {

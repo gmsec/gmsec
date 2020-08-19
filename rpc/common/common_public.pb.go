@@ -30,8 +30,8 @@ type ResultResp struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Result bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result,omitempty"`
-	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg,omitempty"`
+	Result bool   `protobuf:"varint,1,opt,name=result,proto3" json:"result"`
+	Msg    string `protobuf:"bytes,2,opt,name=msg,proto3" json:"msg"`
 }
 
 func (x *ResultResp) Reset() {

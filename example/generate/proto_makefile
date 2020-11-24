@@ -1,5 +1,5 @@
 NAME := example
-PACKAGE := gmsec#
+PACKAGE := gmsec
 
 BUILDSHELLFILE :=`ls ../apidoc/proto/$(NAME)/*.proto | cut -d'/' -f5`
 COMMSHELLFILE :=`ls ../apidoc/proto/common/*.proto | cut -d'/' -f5`

@@ -1,9 +1,9 @@
 syntax = "proto3"; // 指定proto版本
 
-package proto;     // 指定包名
+package example;     // 指定包名
 import "common/common_public.proto";
 
-option go_package = ".;example"; // 指定路径
+option go_package = "rpc/example"; // 指定路径
 
 // 定义Hello服务
 service Hello {

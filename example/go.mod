@@ -19,16 +19,13 @@ require (
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v3 v3.0.0-20200506231410-2ff61e1afc86
-	haihuman v0.0.0-00010101000000-000000000000
 
 )
 
 // replace github.com/xxjwxc/public => ../../public
 
-replace github.com/xxjwxc/ginrpc => F:\xxj\work\workspace\github\xxjwxc\ginrpc
-
+// replace github.com/xxjwxc/ginrpc => ../../ginrpc
 // replace github.com/gmsec/goplugins => ../../goplugins
 
 // replace github.com/gmsec/micro => ../../micro
 
-replace haihuman => ../

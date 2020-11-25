@@ -1,45 +1,52 @@
 
 
-## [Viewing tools](https://www.iminho.me/)
+## [推荐查看工具](https://www.iminho.me/)
 
-## Overview:
-- [hello]
+## 总览:
+- [Hello]
 - [Waiting to write...]
 
 --------------------
 
-#### Brief description:
+#### 简要描述：
 
 - []
 
-#### Request URL:
+#### 请求URL:
 
 - http://localhost:8080/xxjwxc/api/v1/hello.say_hello
 
-#### Methods:
+#### 请求方式：
 
 - post
 
-#### Parameters:
+#### 请求参数:
 
 - ` HelloRequest ` : 请求结构
 
-|Parameter| Requierd | Type | Description|
+|参数名|是否必须|类型|说明|
 |:----    |:---|:----- |-----   |
-|`name` | NO|string|名字   |
-	
+|`name` | 否|string|名字   |
 
-#### Request example:
+
+#### 请求示例:
 ```
 {
      "name": ""
 }
 ```
 
-#### Return parameter description:
-$oem.RespTab
+#### 返回参数说明:
 
-#### Return example:
+- ` HelloReply ` : 响应结构
+
+|参数名|是否必须|类型|说明|
+|:----    |:---|:----- |-----   |
+|`message` | 否|string|消息   |
+|`result` | 否|`common.ResultResp`|多proto 文件样例   |
+
+
+#### 返回示例:
 	
 ```
 {
@@ -51,7 +58,7 @@ $oem.RespTab
 }
 ```
 
-#### Remarks:
+#### 备注:
 
 - 
 	
@@ -59,18 +66,18 @@ $oem.RespTab
 --------------------
 --------------------
 
-#### Custom type:
+#### 自定义类型:
 
 #### ` common `
 
 
 - ` ResultResp ` : 
 
-|Parameter| Requierd | Type | Description|
+|参数名|是否必须|类型|说明|
 |:----    |:---|:----- |-----   |
-|`result` | NO|bool|   |
-|`msg` | NO|string|   |
-	
+|`result` | 否|bool|   |
+|`msg` | 否|string|   |
 
-	
+
+
 

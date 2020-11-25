@@ -32,7 +32,8 @@ ifeq ($(LANG),) # windows
 	# test ! -d rpc/ || rm -rf  rpc/
 	# test -h rpc || ln -s ../rpc ./
 else
-	test -h rpc || ln -s ../rpc ./
+	# test -h rpc || ln -s ../rpc ./ # with linux/mac
+	test -d rpc || ln -s ../rpc ./
 endif
 	go generate
 orm: # gormt 生成 orm代码

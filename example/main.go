@@ -8,13 +8,12 @@ import (
 	proto "example/rpc/example"
 
 	"example/internal/config"
+	"example/internal/routers"
+	"example/internal/service/hello"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gmsec/goplugins/api"
 	"github.com/gmsec/goplugins/plugin"
 	"github.com/gmsec/micro"
-	"github.com/xxjwxc/ginrpc"
-	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
 )
@@ -35,16 +34,15 @@ func CallBack() {
 		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNaming(reg),
 	)
-	h := new(hello)
+	h := new(hello.Hello)
 	proto.RegisterHelloServer(service.Server(), h) // 服务注册
 	// ----------- end
 
 	// gin restful 相关
-	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithDebug(dev.IsDev()))
-	base.OutDoc(true)
 	router := gin.Default()
+	router.Use(routers.Cors())
 	v1 := router.Group("/xxjwxc/api/v1")
-	base.Register(v1, h) // 对象注册
+	routers.OnInitRouter(v1, h) // 自定义初始化
 	// ------ end
 
 	plg, b := plugin.Run(plugin.WithMicro(service),

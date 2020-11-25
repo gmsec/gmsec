@@ -1,4 +1,4 @@
-package main
+package hello
 
 import (
 	"context"
@@ -10,10 +10,10 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-type hello struct {
+type Hello struct {
 }
 
-func (h *hello) SayHello(ctx context.Context, req *proto.HelloRequest) (*proto.HelloReply, error) {
+func (h *Hello) SayHello(ctx context.Context, req *proto.HelloRequest) (*proto.HelloReply, error) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	fmt.Println(md)
 	fmt.Println(ok)

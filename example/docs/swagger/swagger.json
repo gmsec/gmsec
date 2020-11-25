@@ -9,7 +9,7 @@
      "basePath": "/gmsec",
      "tags": [
           {
-               "name": "hello",
+               "name": "Hello",
                "description": ""
           }
      ],
@@ -20,7 +20,7 @@
           "/xxjwxc/api/v1/hello.say_hello": {
                "post": {
                     "tags": [
-                         "hello"
+                         "Hello"
                     ],
                     "summary": "",
                     "description": "",

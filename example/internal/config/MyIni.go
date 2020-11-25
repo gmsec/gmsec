@@ -4,12 +4,6 @@ import (
 	"fmt"
 )
 
-// Config custom config struct
-type Config struct {
-	CfgBase   `yaml:"base"`
-	MySQLInfo MysqlDbInfo `yaml:"mysql_info"`
-}
-
 // MysqlDbInfo mysql database information. mysql 数据库信息
 type MysqlDbInfo struct {
 	Host     string `validate:"required"` // Host. 地址
@@ -17,6 +11,14 @@ type MysqlDbInfo struct {
 	Username string `validate:"required"` // Username 用户名
 	Password string // Password 密码
 	Database string `validate:"required"` // Database 数据库名
+	Type     int    // 数据库类型: 0:mysql , 1:sqlite , 2:mssql
+}
+
+// Config custom config struct
+type Config struct {
+	CfgBase   `yaml:"base"`
+	MySQLInfo MysqlDbInfo `yaml:"mysql_info"`
+	Oauth2Url string      `yaml:"oauth2_url"`
 }
 
 // SetMysqlDbInfo Update MySQL configuration information
@@ -38,4 +40,19 @@ func GetMysqlConStr() string {
 		_map.MySQLInfo.Port,
 		_map.MySQLInfo.Database,
 	)
+}
+
+// GetCheckTokenURL checktoken
+func GetCheckTokenURL() string {
+	return _map.Oauth2Url + "/check_token"
+}
+
+// GetLoginURL 登陆用的url
+func GetLoginURL() string {
+	return _map.Oauth2Url + "/authorize"
+}
+
+// GetLoginNoPwdURL token 授权模式登陆
+func GetLoginNoPwdURL() string {
+	return _map.Oauth2Url + "/authorize_nopwd"
 }

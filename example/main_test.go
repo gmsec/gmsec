@@ -11,7 +11,7 @@ import (
 
 	"context"
 
-	proto "gmsec/rpc/example"
+	proto "example/rpc/example"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/api"

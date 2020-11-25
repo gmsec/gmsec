@@ -1,5 +1,4 @@
 NAME := example
-PACKAGE := gmsec
 
 BUILDSHELLFILE :=`ls ../apidoc/proto/$(NAME)/*.proto | cut -d'/' -f5`
 COMMSHELLFILE :=`ls ../apidoc/proto/common/*.proto | cut -d'/' -f5`
@@ -18,7 +17,7 @@ gen_build:# 自定义注册
 	done;
 	@sed -i 's/,omitempty//g' ./rpc/$(NAME)/*.pb.go #开始取消json omitempty
 	cp -rf ./rpc/$(NAME)/ ../rpc/ #子目录向父目录拷贝
-	@sed -i 's#common "rpc/common"#common "$(PACKAGE)/rpc/common"#g' ./rpc/$(NAME)/*.pb.go #开始替换common包
+	@sed -i 's#common "rpc/common"#common "$(NAME)/rpc/common"#g' ./rpc/$(NAME)/*.pb.go #开始替换common包
  
 gen_base:# 基础库
 	@mkdir -p ../rpc/common

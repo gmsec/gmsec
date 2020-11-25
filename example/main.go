@@ -5,18 +5,16 @@ import (
 	"os"
 	"time"
 
-	proto "gmsec/rpc/example"
+	proto "example/rpc/example"
 
-	"github.com/xxjwxc/public/dev"
-
-	"gmsec/internal/config"
-
-	"github.com/gmsec/goplugins/api"
+	"example/internal/config"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gmsec/goplugins/api"
 	"github.com/gmsec/goplugins/plugin"
 	"github.com/gmsec/micro"
 	"github.com/xxjwxc/ginrpc"
+	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
 )
@@ -43,6 +41,7 @@ func CallBack() {
 
 	// gin restful 相关
 	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithDebug(dev.IsDev()))
+	base.OutDoc(true)
 	router := gin.Default()
 	v1 := router.Group("/xxjwxc/api/v1")
 	base.Register(v1, h) // 对象注册

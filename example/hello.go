@@ -2,8 +2,8 @@ package main
 
 import (
 	"context"
+	proto "example/rpc/example"
 	"fmt"
-	proto "gmsec/rpc/example"
 
 	"github.com/xxjwxc/public/tools"
 

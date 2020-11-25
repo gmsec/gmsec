@@ -1,59 +1,57 @@
 
 
-## [推荐查看工具](https://www.iminho.me/)
+## [Viewing tools](https://www.iminho.me/)
 
-## 总览:
+## Overview:
 - [hello]
 - [Waiting to write...]
 
 --------------------
 
-#### 简要描述：
+#### Brief description:
 
 - []
 
-#### 请求URL:
+#### Request URL:
 
 - http://localhost:8080/xxjwxc/api/v1/hello.say_hello
 
-#### 请求方式：
+#### Methods:
 
 - post
 
-#### 请求参数:
+#### Parameters:
 
 - ` HelloRequest ` : 请求结构
 
-|参数名|是否必须|类型|说明|
+|Parameter| Requierd | Type | Description|
 |:----    |:---|:----- |-----   |
-|`name` | 否|string|名字   |
+|`name` | NO|string|名字   |
+	
 
-
-#### 请求示例:
+#### Request example:
 ```
 {
      "name": ""
 }
 ```
 
-#### 返回参数说明:
+#### Return parameter description:
+$oem.RespTab
 
-- ` HelloReply ` : 响应结构
-
-|参数名|是否必须|类型|说明|
-|:----    |:---|:----- |-----   |
-|`message` | 否|string|消息   |
-
-
-#### 返回示例:
+#### Return example:
 	
 ```
 {
-     "message": ""
+     "message": "",
+     "result": {
+          "msg": "",
+          "result": false
+     }
 }
 ```
 
-#### 备注:
+#### Remarks:
 
 - 
 	
@@ -61,6 +59,18 @@
 --------------------
 --------------------
 
-#### 自定义类型:
+#### Custom type:
 
+#### ` common `
+
+
+- ` ResultResp ` : 
+
+|Parameter| Requierd | Type | Description|
+|:----    |:---|:----- |-----   |
+|`result` | NO|bool|   |
+|`msg` | NO|string|   |
+	
+
+	
 

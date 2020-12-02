@@ -37,6 +37,11 @@
 make gen
 ```
 
+- 新建一个服务
+```
+make new service=[服务名]
+```
+
 ## proto定义
 
 ```

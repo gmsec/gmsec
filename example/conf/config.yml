@@ -1,9 +1,9 @@
 base:
     is_dev : true
     serial_number : 1.0.0
-    service_name : gmsec
-    service_displayname : gmsecserver
-    sercice_desc : gmsec微服务
+    service_name : example
+    service_displayname : exampleserver
+    sercice_desc : example微服务
 mysql_info:
     host : localhost
     port : 3306

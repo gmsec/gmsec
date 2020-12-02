@@ -22,7 +22,7 @@ import (
 func CallBack() {
 	// swagger
 	myswagger.SetHost("https://localhost:8080")
-	myswagger.SetBasePath("gmsec")
+	myswagger.SetBasePath("example")
 	myswagger.SetSchemes(true, false)
 	// -----end --
 
@@ -41,7 +41,7 @@ func CallBack() {
 	// gin restful 相关
 	router := gin.Default()
 	router.Use(routers.Cors())
-	v1 := router.Group("/xxjwxc/api/v1")
+	v1 := router.Group("/example/api/v1")
 	routers.OnInitRouter(v1, h) // 自定义初始化
 	// ------ end
 

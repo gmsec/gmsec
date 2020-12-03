@@ -1,11 +1,12 @@
+service := example
 install:
-	./proto_install.sh
+	./proto_install_mac.sh
 source_install:
 	./proto_install.sh
 clear: # 删除proto文件夹下所有go文件（谨慎操作）
 	rm -rf ./prc/**/*.go
 new: #make new service=example
-	@echo start install $(service)
+	echo start install $(service)
 	@# 开始替换文件
 	@test -d $(service) || cp -r ./example/ ./$(service)/
 	@find ./$(service)/ -type f -name "*.go" | xargs sed -i 's#example#$(service)#g' -i

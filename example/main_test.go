@@ -1,6 +1,7 @@
 package main
 
 import (
+	"example/internal/service/hello"
 	"fmt"
 	"math/rand"
 	"testing"
@@ -42,7 +43,7 @@ func TestServer(m *testing.T) {
 		// micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNaming(reg),
 	)
-	h := new(hello)
+	h := new(hello.Hello)
 	proto.RegisterHelloServer(service.Server(), h) // 服务注册
 	// ----------- end
 

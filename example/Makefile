@@ -22,6 +22,7 @@ clear:
 	test ! -d err/ || rm -rf err/
 	test ! -f $(NAME) || rm $(NAME)
 	test ! -f $(NAME).exe || rm $(NAME).exe
+	rm -rf ./prc/$(NAME)/*.go # 删除proto文件夹下所有go文件（谨慎操作）
 # gen:
 # 	- mkdir ../rpc
 # 	- mkdir ./rpc/$(+)
@@ -42,5 +43,4 @@ install:
 	../proto_install.sh
 source_install:
 	../proto_install.sh
-clear: # 删除proto文件夹下所有go文件（谨慎操作）
-	rm -rf ./prc/$(SaverName)/*.go
+

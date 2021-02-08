@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/gmsec/gmsec.svg?branch=master)](https://travis-ci.org/gmsec/gmsec)
-[![Go Report Card](https://goreportcard.com/badge/github.com/gmsec/gmsec)](https://goreportcard.com/report/github.com/xxjwxc/gmsec)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gmsec/gmsec)](https://goreportcard.com/report/github.com/gmsec/gmsec)
 [![codecov](https://codecov.io/gh/gmsec/gmsec/branch/master/graph/badge.svg)](https://codecov.io/gh/gmsec/gmsec)
 [![GoDoc](https://godoc.org/github.com/gmsec/gmsec?status.svg)](https://godoc.org/github.com/gmsec/gmsec)
 

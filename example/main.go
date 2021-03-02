@@ -5,11 +5,8 @@ import (
 	"os"
 	"time"
 
-	proto "example/rpc/example"
-
 	"example/internal/config"
 	"example/internal/routers"
-	"example/internal/service/hello"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"
@@ -34,15 +31,13 @@ func CallBack() {
 		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNaming(reg),
 	)
-	h := new(hello.Hello)
-	proto.RegisterHelloServer(service.Server(), h) // 服务注册
 	// ----------- end
 
 	// gin restful 相关
 	router := gin.Default()
 	router.Use(routers.Cors())
 	v1 := router.Group("/example/api/v1")
-	routers.OnInitRouter(v1, h) // 自定义初始化
+	routers.OnInitRoot(service.Server(), v1) // 自定义初始化
 	// ------ end
 
 	plg, b := plugin.Run(plugin.WithMicro(service),

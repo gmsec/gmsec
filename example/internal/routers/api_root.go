@@ -1,27 +1,41 @@
 package routers
 
 import (
-	"example/internal/api"
 	"fmt"
 	"net/http"
 	"strings"
 
+	"example/internal/api"
+	"example/internal/service/hello"
+	proto "example/rpc/example"
+
 	"github.com/chenjiandongx/ginprom"
 	"github.com/gin-gonic/gin"
+	"github.com/gmsec/micro/server"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/xxjwxc/ginrpc"
 	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/tools"
 )
 
+// OnInitRoot 初始化
+func OnInitRoot(s server.Server, router gin.IRoutes, objs ...interface{}) {
+	var args []interface{}
+	h := new(hello.Hello)
+	args = append(args, h)
+	proto.RegisterHelloServer(s, h) // 服务注册
+	args = append(args, objs...)
+	OnInitRouter(router, args...)
+}
+
 // OnInitRouter 默认初始化
-func OnInitRouter(router gin.IRouter, objs ...interface{}) {
+func OnInitRouter(router gin.IRoutes, objs ...interface{}) {
 	InitFunc(router)
 	InitObj(router, objs...)
 }
 
 // InitFunc 默认初始化函数
-func InitFunc(router gin.IRouter) {
+func InitFunc(router gin.IRoutes) {
 	router.StaticFS("/file", http.Dir(tools.GetCurrentDirectory()+"/file")) //加载静态资源，一般是上传的资源，例如用户上传的图片
 	router.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "ok")
@@ -30,12 +44,11 @@ func InitFunc(router gin.IRouter) {
 }
 
 // InitObj 初始化对象
-func InitObj(router gin.IRouter, objs ...interface{}) {
+func InitObj(router gin.IRoutes, objs ...interface{}) {
 	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithOutDoc(dev.IsDev()), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithOutPath("internal/routers"),
-		ginrpc.WithBeforeAfter(&ginrpc.DefaultGinBeforeAfter{})) // 基础信息注册
-	// objs = append(objs, new(hello.Hello)) // protoc service 注册
+		ginrpc.WithBeforeAfter(&ginrpc.DefaultGinBeforeAfter{}))
 
-	// base.OutDoc(true)              // 输出文档
+	base.OutDoc(true)
 	base.Register(router, objs...) // 对象注册
 }
 

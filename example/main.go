@@ -29,7 +29,7 @@ func CallBack() {
 	// reg := registry.NewDNSNamingRegistry()
 	// grpc 相关 初始化服务
 	service := micro.NewService(
-		micro.WithName("lp.srv.eg1"),
+		micro.WithName("example.srv.eg1"),
 		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
 		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
 		// micro.WithRegistryNaming(reg),

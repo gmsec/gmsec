@@ -1,7 +1,6 @@
 package main
 
 import (
-	"example/internal/service/hello"
 	"fmt"
 	"math/rand"
 	"testing"
@@ -12,6 +11,7 @@ import (
 
 	"context"
 
+	"example/internal/service/hello"
 	proto "example/rpc/example"
 
 	"github.com/gin-gonic/gin"

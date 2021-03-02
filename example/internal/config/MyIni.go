@@ -4,6 +4,13 @@ import (
 	"fmt"
 )
 
+// Config custom config struct
+type Config struct {
+	CfgBase   `yaml:"base"`
+	MySQLInfo MysqlDbInfo `yaml:"mysql_info"`
+	Oauth2Url string      `yaml:"oauth2_url"`
+}
+
 // MysqlDbInfo mysql database information. mysql 数据库信息
 type MysqlDbInfo struct {
 	Host     string `validate:"required"` // Host. 地址
@@ -12,13 +19,6 @@ type MysqlDbInfo struct {
 	Password string // Password 密码
 	Database string `validate:"required"` // Database 数据库名
 	Type     int    // 数据库类型: 0:mysql , 1:sqlite , 2:mssql
-}
-
-// Config custom config struct
-type Config struct {
-	CfgBase   `yaml:"base"`
-	MySQLInfo MysqlDbInfo `yaml:"mysql_info"`
-	Oauth2Url string      `yaml:"oauth2_url"`
 }
 
 // SetMysqlDbInfo Update MySQL configuration information

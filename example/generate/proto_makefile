@@ -1,5 +1,4 @@
 NAME := example
-
 APIDOCDIR := ../apidoc#文档目录
 RPCCDIR := $(APIDOCDIR)/rpc#rpc输出目录
 

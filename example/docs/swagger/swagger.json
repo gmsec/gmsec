@@ -6,7 +6,7 @@
           "title": "Swagger Petstore"
      },
      "host": "localhost:8080",
-     "basePath": "/gmsec",
+     "basePath": "/example",
      "tags": [
           {
                "name": "Hello",
@@ -17,7 +17,7 @@
           "http"
      ],
      "paths": {
-          "/xxjwxc/api/v1/hello.say_hello": {
+          "/example/api/v1/hello.say_hello": {
                "post": {
                     "tags": [
                          "Hello"

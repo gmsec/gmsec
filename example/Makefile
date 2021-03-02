@@ -43,4 +43,8 @@ install:
 	../proto_install.sh
 source_install:
 	../proto_install.sh
-
+master:
+	go get -u github.com/xxjwxc/public@master
+	go get -u github.com/xxjwxc/ginrpc@master
+	go get -u github.com/gmsec/micro@master
+	go get -u github.com/gmsec/goplugins@master

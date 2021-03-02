@@ -6,7 +6,9 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/chenjiandongx/ginprom"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/xxjwxc/ginrpc"
 	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/tools"
@@ -21,6 +23,10 @@ func OnInitRouter(router gin.IRouter, objs ...interface{}) {
 // InitFunc 默认初始化函数
 func InitFunc(router gin.IRouter) {
 	router.StaticFS("/file", http.Dir(tools.GetCurrentDirectory()+"/file")) //加载静态资源，一般是上传的资源，例如用户上传的图片
+	router.GET("/health", func(c *gin.Context) {
+		c.String(http.StatusOK, "ok")
+	}) // 健康检查
+	router.GET("/metrics", ginprom.PromHandler(promhttp.Handler())) // 添加grafana监控
 }
 
 // InitObj 初始化对象

@@ -1,7 +1,7 @@
 package core
 
 import (
-	"gmsec/internal/config"
+	"example/internal/config"
 	"runtime"
 
 	"github.com/xxjwxc/public/errors"

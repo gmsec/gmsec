@@ -14,7 +14,7 @@
 
 #### 请求URL:
 
-- http://localhost:8080/xxjwxc/api/v1/hello.say_hello
+- http://localhost:8080/example/api/v1/hello.say_hello
 
 #### 请求方式：
 
@@ -52,8 +52,7 @@
 {
      "message": "",
      "result": {
-          "msg": "",
-          "result": false
+          "msg": ""
      }
 }
 ```
@@ -75,8 +74,7 @@
 
 |参数名|是否必须|类型|说明|
 |:----    |:---|:----- |-----   |
-|`result` | 否|bool|   |
-|`msg` | 否|string|   |
+|`msg` | 否|string|// bool status = 1;   |
 
 
 

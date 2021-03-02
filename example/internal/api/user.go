@@ -79,12 +79,13 @@ func SaveCacheBody(accessToken, username, expireTime string) {
 
 // GetCacheBody 获取缓存
 func GetCacheBody(token string) (value *UserInfo, b bool) {
+	value = new(UserInfo)
 	cache := mycache.NewCache("oauth2")
-	if tp, ok := cache.Value(token); ok {
-		value = tp.(*UserInfo)
+	err := cache.Value(token, &value)
+	if err != nil {
+		return nil, false
 	}
-
-	return
+	return value, true
 }
 
 func strToInt(src string) int {

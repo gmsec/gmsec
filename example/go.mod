@@ -5,7 +5,7 @@ go 1.14
 require (
 	github.com/chenjiandongx/ginprom v0.0.0-20201217063207-fe11b7f55a35
 	github.com/gin-gonic/gin v1.6.3
-	github.com/gmsec/goplugins v0.0.0-20200605101835-e4fd6922d94e
+	github.com/gmsec/goplugins v0.0.0-20210224070911-be5d0b3e8817
 	github.com/gmsec/micro v0.0.0-20210224034546-8dea8f725fce
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
 	github.com/golang/protobuf v1.4.3

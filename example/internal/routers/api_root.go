@@ -32,6 +32,13 @@ func OnInitRoot(s server.Server, router gin.IRoutes, objs ...interface{}) {
 func OnInitRouter(router gin.IRoutes, objs ...interface{}) {
 	InitFunc(router)
 	InitObj(router, objs...)
+	init3rdGrpcHost()
+}
+
+// 初始化第三方host
+func init3rdGrpcHost() {
+	// micro.SetClientServiceAddr(haibuilder.GetHAIMotionBuilderName(), config.GetHaibuildHost()...)
+	// micro.SetClientServiceName(haibuilder.GetHAIMotionBuilderName(), "haibuilder.srv.eg1")
 }
 
 // InitFunc 默认初始化函数

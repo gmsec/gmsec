@@ -9,6 +9,7 @@ type Config struct {
 	CfgBase   `yaml:"base"`
 	MySQLInfo MysqlDbInfo `yaml:"mysql_info"`
 	Oauth2Url string      `yaml:"oauth2_url"`
+	Port      string      `yaml:"port"` // 端口号
 }
 
 // MysqlDbInfo mysql database information. mysql 数据库信息
@@ -55,4 +56,9 @@ func GetLoginURL() string {
 // GetLoginNoPwdURL token 授权模式登陆
 func GetLoginNoPwdURL() string {
 	return _map.Oauth2Url + "/authorize_nopwd"
+}
+
+// GetPort 获取端口号
+func GetPort() string {
+	return _map.Port
 }

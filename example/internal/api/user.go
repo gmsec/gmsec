@@ -48,7 +48,7 @@ func GetUserFromToken(token string) (userInfo *UserInfo, b bool) {
 	parm := make(map[string]string)
 	parm["token"] = token
 	bod, _ := json.Marshal(parm)
-	rBody := myhttp.OnPostJSON(config.GetCheckTokenURL(), string(bod))
+	rBody, _ := myhttp.OnPostJSON(config.GetCheckTokenURL(), string(bod))
 	if len(rBody) > 0 {
 		var msg MapMessageBody
 		json.Unmarshal([]byte(rBody), &msg)

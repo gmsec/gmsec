@@ -14,7 +14,7 @@
 
 #### 请求URL:
 
-- http://localhost:8080/example/api/v1/hello.say_hello
+- http://localhost:82/example/api/v1/hello.say_hello
 
 #### 请求方式：
 

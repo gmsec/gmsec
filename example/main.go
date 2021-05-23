@@ -18,7 +18,7 @@ import (
 // CallBack service call backe
 func CallBack() {
 	// swagger
-	myswagger.SetHost("https://localhost:8080")
+	myswagger.SetHost("https://localhost:" + config.GetPort())
 	myswagger.SetBasePath("example")
 	myswagger.SetSchemes(true, false)
 	// -----end --
@@ -42,7 +42,7 @@ func CallBack() {
 
 	plg, b := plugin.Run(plugin.WithMicro(service),
 		plugin.WithGin(router),
-		plugin.WithAddr(":82"))
+		plugin.WithAddr(":"+config.GetPort()))
 
 	if b == nil {
 		plg.Wait()

@@ -52,7 +52,8 @@ func InitFunc(router gin.IRoutes) {
 
 // InitObj 初始化对象
 func InitObj(router gin.IRoutes, objs ...interface{}) {
-	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithOutDoc(dev.IsDev()), ginrpc.WithDebug(dev.IsDev()), ginrpc.WithOutPath("internal/routers"),
+	base := ginrpc.New(ginrpc.WithCtx(api.NewAPIFunc), ginrpc.WithOutDoc(dev.IsDev()), ginrpc.WithDebug(dev.IsDev()),
+		ginrpc.WithOutPath("internal/routers"), ginrpc.WithImportFile("rpc/common", "../apidoc/rpc/common"),
 		ginrpc.WithBeforeAfter(&ginrpc.DefaultGinBeforeAfter{}))
 
 	base.OutDoc(true)

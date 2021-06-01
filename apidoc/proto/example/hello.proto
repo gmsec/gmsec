@@ -5,8 +5,8 @@ import "common/common_public.proto";
 
 option go_package = "rpc/example"; // 指定路径
 
-// 定义Hello服务
-service Hello {
+// 定义example服务
+service example {
     // 定义SayHello方法
     rpc SayHello(HelloRequest) returns (HelloReply) {}
 }

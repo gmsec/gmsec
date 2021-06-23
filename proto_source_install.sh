@@ -2,9 +2,12 @@
 
 version="3.11.4"
 
+ABROAD_URL="https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protobuf-all-${version}.tar.gz"
+INTERNAL_URL="https://github.com.cnpmjs.org/protocolbuffers/protobuf/releases/download/v${version}/protobuf-all-${version}.tar.gz"
+
 # su - xxj -c "qwer"
 # download
-curl -fLo protobuf.tar.gz https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protobuf-all-${version}.tar.gz
+curl -fLo protobuf.tar.zip ${ABROAD_URL} || curl -fLo protobuf.tar.zip ${INTERNAL_URL}
 tar -xvf protobuf.tar.gz
 cd protobuf-${version}
 

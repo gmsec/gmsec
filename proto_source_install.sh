@@ -7,7 +7,7 @@ INTERNAL_URL="https://github.com.cnpmjs.org/protocolbuffers/protobuf/releases/do
 
 # su - xxj -c "qwer"
 # download
-curl -fLo protobuf.tar.zip ${ABROAD_URL} || curl -fLo protobuf.tar.zip ${INTERNAL_URL}
+curl -fLo protobuf.tar.gz ${ABROAD_URL} || curl -fLo protobuf.tar.zip ${INTERNAL_URL}
 tar -xvf protobuf.tar.gz
 cd protobuf-${version}
 

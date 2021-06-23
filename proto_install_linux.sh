@@ -3,7 +3,6 @@
 version="3.11.4"
 
 ABROAD_URL="https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protoc-${version}-linux-x86_64.zip"
-
 INTERNAL_URL="https://github.com.cnpmjs.org/protocolbuffers/protobuf/releases/download/v${version}/protoc-${version}-linux-x86_64.zip"
 
 # su - xxj -c "qwer"

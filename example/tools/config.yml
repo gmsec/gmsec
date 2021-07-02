@@ -15,9 +15,18 @@ is_table_name : true # 是否直接生成表名,列名
 is_null_to_point : false # 数据库默认 'DEFAULT NULL' 时设置结构为指针类型
 table_prefix : "" # 表前缀, 如果有则使用, 没有留空
 db_info:
-    host : localhost
+    host : localhost # type=1的时候，host为yml文件全路径
     port : 3306
+    database : oauth_db
     username : root
     password : 123456
-    database : oauth_db
     type: 0 # 数据库类型:0:mysql , 1:sqlite , 2:mssql
+
+# sqlite
+# db_info:
+#     host : /Users/xxj/Downloads/caoguo # type=1的时候，host为yml文件全路径
+#     port : 
+#     username : 
+#     password : 
+#     database : 
+#     type: 1 # 数据库类型:0:mysql , 1:sqlite , 2:mssql

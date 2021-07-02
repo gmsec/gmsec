@@ -44,7 +44,7 @@ func TestServer(m *testing.T) {
 		// micro.WithRegistryNaming(reg),
 	)
 	h := new(hello.Hello)
-	proto.RegisterHelloServer(service.Server(), h) // 服务注册
+	proto.RegisterExampleServer(service.Server(), h) // 服务注册
 	// ----------- end
 
 	// gin restful 相关
@@ -66,7 +66,7 @@ func TestServer(m *testing.T) {
 }
 
 func TestClient(m *testing.T) {
-	micro.SetClientServiceName(proto.GetHelloName(), "xxjwxc.lp.srv.eg1") // set client group
+	micro.SetClientServiceName(proto.GetExampleName(), "xxjwxc.lp.srv.eg1") // set client group
 	// first
 	// reg := etcdv3.NewEtcdv3NamingRegistry(clientv3.Config{
 	// 	Endpoints:   []string{"127.0.0.1:2379"},
@@ -81,7 +81,7 @@ func TestClient(m *testing.T) {
 	wp := workpool.New(20)    //设置最大线程数
 	for i := 0; i < 20; i++ { //开启20个请求
 		wp.Do(func() error {
-			say := proto.GetHelloClient()
+			say := proto.GetExampleClient()
 			var request proto.HelloRequest
 			request.Name = fmt.Sprintf("%v", rand.Intn(500))
 

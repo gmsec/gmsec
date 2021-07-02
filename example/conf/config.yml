@@ -10,4 +10,12 @@ mysql_info:
     username : root
     password : 123456
     database : oauth_db
+redis_info:
+    addrs: ["127.0.0.1:6379"]
+    password: 123456
+    group_name: oauth2
+    db: 0
+etcd_info:
+    addrs: ["127.0.0.1:2379"]
+    timeout: 3
 port: 82

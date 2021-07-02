@@ -52,8 +52,7 @@
 {
      "message": "",
      "result": {
-          "msg": "",
-          "result": false
+          "msg": ""
      }
 }
 ```
@@ -75,8 +74,7 @@
 
 |参数名|是否必须|类型|说明|
 |:----    |:---|:----- |-----   |
-|`result` | 否|bool|   |
-|`msg` | 否|string|   |
+|`msg` | 否|string|// bool status = 1;   |
 
 
 

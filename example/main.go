@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gmsec/goplugins/plugin"
 	"github.com/gmsec/micro"
+	"github.com/gmsec/micro/registry"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
 )
@@ -23,13 +24,17 @@ func CallBack() {
 	myswagger.SetSchemes(true, false)
 	// -----end --
 
-	// reg := registry.NewDNSNamingRegistry()
+	reg := registry.NewDNSNamingRegistry()
+	// reg := etcdv3.NewEtcdv3NamingRegistry(clientv3.Config{
+	// 	Endpoints:   config.GetEtcdInfo().Addrs,
+	// 	DialTimeout: time.Second * time.Duration(config.GetEtcdInfo().Timeout),
+	// })
 	// grpc 相关 初始化服务
 	service := micro.NewService(
-		micro.WithName("example.srv.eg1"),
+		micro.WithName("gmsec.srv.example"),
 		// micro.WithRegisterTTL(time.Second*30),      //指定服务注册时间
 		micro.WithRegisterInterval(time.Second*15), //让服务在指定时间内重新注册
-		// micro.WithRegistryNaming(reg),
+		micro.WithRegistryNaming(reg),
 	)
 	// ----------- end
 

@@ -6,10 +6,13 @@ import (
 
 // Config custom config struct
 type Config struct {
-	CfgBase   `yaml:"base"`
-	MySQLInfo MysqlDbInfo `yaml:"mysql_info"`
-	Oauth2Url string      `yaml:"oauth2_url"`
-	Port      string      `yaml:"port"` // 端口号
+	CfgBase     `yaml:"base"`
+	MySQLInfo   MysqlDbInfo `yaml:"mysql_info"`
+	EtcdInfo    EtcdInfo    `yaml:"etcd_info"`
+	RedisDbInfo RedisDbInfo `yaml:"redis_info"`
+	Oauth2Url   string      `yaml:"oauth2_url"`
+	Port        string      `yaml:"port"` // 端口号
+
 }
 
 // MysqlDbInfo mysql database information. mysql 数据库信息
@@ -20,6 +23,20 @@ type MysqlDbInfo struct {
 	Password string // Password 密码
 	Database string `validate:"required"` // Database 数据库名
 	Type     int    // 数据库类型: 0:mysql , 1:sqlite , 2:mssql
+}
+
+// RedisDbInfo redis database information. redis 数据库信息
+type RedisDbInfo struct {
+	Addrs     []string `yaml:"addrs"` // Host. 地址
+	Password  string   // Password 密码
+	GroupName string   `yaml:"group_name"` // 分组名字
+	DB        int      `yaml:"db"`         // 数据库序号
+}
+
+// EtcdInfo etcd config info
+type EtcdInfo struct {
+	Addrs   []string `yaml:"addrs"`   // Host. 地址
+	Timeout int      `yaml:"timeout"` // 超时时间(秒)
 }
 
 // SetMysqlDbInfo Update MySQL configuration information
@@ -61,4 +78,14 @@ func GetLoginNoPwdURL() string {
 // GetPort 获取端口号
 func GetPort() string {
 	return _map.Port
+}
+
+// GetRedisDbInfo Get redis configuration information .获取redis配置信息
+func GetRedisDbInfo() RedisDbInfo {
+	return _map.RedisDbInfo
+}
+
+// GetEtcdInfo get etcd configuration information. 获取etcd 配置信息
+func GetEtcdInfo() EtcdInfo {
+	return _map.EtcdInfo
 }

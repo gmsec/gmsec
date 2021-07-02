@@ -23,7 +23,7 @@ func OnInitRoot(s server.Server, router gin.IRoutes, objs ...interface{}) {
 	var args []interface{}
 	h := new(hello.Hello)
 	args = append(args, h)
-	proto.RegisterHelloServer(s, h) // 服务注册
+	proto.RegisterExampleServer(s, h) // 服务注册
 	args = append(args, objs...)
 	OnInitRouter(router, args...)
 }
@@ -37,8 +37,7 @@ func OnInitRouter(router gin.IRoutes, objs ...interface{}) {
 
 // 初始化第三方host
 func init3rdGrpcHost() {
-	// micro.SetClientServiceAddr(haibuilder.GetHAIMotionBuilderName(), config.GetHaibuildHost()...)
-	// micro.SetClientServiceName(haibuilder.GetHAIMotionBuilderName(), "haibuilder.srv.eg1")
+	// micro.SetClientServiceName(oauth2.GetOauth2Name(), "gmsec.srv.oauth2")
 }
 
 // InitFunc 默认初始化函数

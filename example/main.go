@@ -14,6 +14,7 @@ import (
 	"github.com/gmsec/micro/registry"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
+	_ "go.etcd.io/etcd/client/v3"
 )
 
 // CallBack service call backe
@@ -25,7 +26,7 @@ func CallBack() {
 	// -----end --
 
 	reg := registry.NewDNSNamingRegistry()
-	// reg := etcdv3.NewEtcdv3NamingRegistry(clientv3.Config{
+	// reg := etcdv3.NewEtcdv3NamingRegistry(v3.Config{
 	// 	Endpoints:   config.GetEtcdInfo().Addrs,
 	// 	DialTimeout: time.Second * time.Duration(config.GetEtcdInfo().Timeout),
 	// })

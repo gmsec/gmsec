@@ -19,7 +19,7 @@
 - [gin 参数自动绑定(ginrpc)](https://github.com/xxjwxc/ginrpc)
 - [dns 注册发现(mdns)](https://github.com/asim/mdns)
 - [markdown/mindoc 文档自动导出](https://github.com/grpc)
-
+- [支持etcd/nacos服务注册于发现](https://github.com/gmsec/goplugins)
 
 ## 安装
 

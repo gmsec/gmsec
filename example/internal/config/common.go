@@ -6,18 +6,21 @@ import (
 	"os"
 	"path"
 
+	"github.com/xxjwxc/consult"
+	"github.com/xxjwxc/consult/consulkv"
 	"github.com/xxjwxc/public/dev"
+	"github.com/xxjwxc/public/mylog"
 	"github.com/xxjwxc/public/tools"
 	"gopkg.in/yaml.v3"
 )
 
 // CfgBase base config struct
 type CfgBase struct {
-	SerialNumber       string `json:"serial_number" yaml:"serial_number"`             // version.版本号
-	ServiceName        string `json:"service_name" yaml:"service_name"`               // service name .service名字
-	ServiceDisplayname string `json:"service_displayname" yaml:"service_displayname"` // display name .显示名
-	SerciceDesc        string `json:"sercice_desc" yaml:"sercice_desc"`               // sercice desc .service描述
-	IsDev              bool   `json:"is_dev" yaml:"is_dev"`                           // Is it a development version?是否是开发版本
+	SerialNumber       string `json:"serial_number" yaml:"serial_number" consul:"serial_number" `                  // version.版本号
+	ServiceName        string `json:"service_name" yaml:"service_name" consul:"service_name"`                      // service name .service名字
+	ServiceDisplayname string `json:"service_displayname" yaml:"service_displayname" consul:"service_displayname"` // display name .显示名
+	SerciceDesc        string `json:"sercice_desc" yaml:"sercice_desc" consul:"sercice_desc"`                      // sercice desc .service描述
+	IsDev              bool   `json:"is_dev" yaml:"is_dev" consul:"is_dev"`                                        // Is it a development version?是否是开发版本
 }
 
 var _map = Config{}
@@ -36,6 +39,9 @@ func onInit() {
 		fmt.Println("Load config file error: ", err.Error())
 		return
 	}
+
+	// consul
+	initConsul()
 }
 
 // InitFile default value from file .
@@ -88,4 +94,21 @@ func SaveToFile() error {
 		string(d),
 	}, true)
 	return nil
+}
+
+func initConsul() {
+	if len(_map.ConsulAddr) > 0 {
+		// 初始化数据
+		conf := consulkv.NewConfig(
+			consulkv.WithPrefix(GetConsulTag()+"/"+_map.ServiceName), // consul kv prefix
+			consulkv.WithAddress(_map.ConsulAddr),                    // consul address
+		)
+		if err := conf.Init(); err != nil {
+			mylog.Error(err)
+			return
+		}
+		consult.AutoLoadConfig(conf, &_map)
+
+		consult.AutoSetConfig(conf, &_map, false) // 执行一次更新
+	}
 }

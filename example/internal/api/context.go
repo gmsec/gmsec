@@ -2,6 +2,8 @@
 package api
 
 import (
+	"context"
+
 	"github.com/gin-gonic/gin"
 	ginapi "github.com/gmsec/goplugins/api"
 	"github.com/xxjwxc/public/mylog"
@@ -50,4 +52,12 @@ func (c *Context) GetClientIP() string {
 // NewAPIFunc default of custom handlefunc
 func NewAPIFunc(c *gin.Context) interface{} {
 	return &Context{*ginapi.NewCtx(c)}
+}
+
+// WidthContext 通过ctx获取
+func WidthContext(ctx context.Context) *Context {
+	c := &Context{}
+	c.Context.Context = ctx
+	c.WriteHeadToCtx(c.GetGinCtx()) // 默认推送header 到ctx里面
+	return c
 }

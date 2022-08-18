@@ -21,7 +21,7 @@ type Context struct { // 包装gin的上下文到自定义context
 	ginapi.Context
 }
 
-//GetUserInfo 获取用户信息
+// GetUserInfo 获取用户信息
 func (c *Context) GetUserInfo() (u *UserInfo, b bool) {
 	accessToken, err := c.GetGinCtx().Cookie(UserToken)
 	if err == nil {

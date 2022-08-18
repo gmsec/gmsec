@@ -15,6 +15,7 @@ import (
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
 	_ "go.etcd.io/etcd/client/v3"
+	// "github.com/gmsec/micro/tracer"
 )
 
 // CallBack service call backe
@@ -24,7 +25,7 @@ func CallBack() {
 	myswagger.SetBasePath("example")
 	myswagger.SetSchemes(true, false)
 	// -----end --
-
+	// tracer.WithTracer("192.155.1.150:6831") // 链路追踪
 	reg := registry.NewDNSNamingRegistry()
 	// reg := etcdv3.NewEtcdv3NamingRegistry(v3.Config{
 	// 	Endpoints:   config.GetEtcdInfo().Addrs,
@@ -42,6 +43,10 @@ func CallBack() {
 	// gin restful 相关
 	router := gin.Default()
 	router.Use(routers.Cors())
+	// trace := tracer.GetTracer()
+	// if trace != nil { // 链路追踪
+	// 	router.Use(routers.UseJager(trace))
+	// }
 	v1 := router.Group("/example/api/v1")
 	routers.OnInitRoot(service.Server(), v1) // 自定义初始化
 	// ------ end

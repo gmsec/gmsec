@@ -20,4 +20,5 @@ etcd_info:
     timeout: 3
 consul_addr: http://192.155.1.150:8500
 consul_tag: dev
+jaeger_addr: 192.155.1.150:6831
 port: 82

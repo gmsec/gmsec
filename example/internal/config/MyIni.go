@@ -14,6 +14,7 @@ type Config struct {
 	Port        string      `yaml:"port" consul:"port"`                // 端口号
 	ConsulAddr  string      `yaml:"consul_addr" consul:"consul_addr" ` // consul 地址
 	ConsulTag   string      `yaml:"consul_tag" consul:"consul_tag"`
+	JaegerAddr  string      `yaml:"jaeger_addr" consul:"jaeger_addr"`
 }
 
 // MysqlDbInfo mysql database information. mysql 数据库信息
@@ -97,4 +98,8 @@ func GetConsulTag() string {
 	}
 
 	return "service"
+}
+
+func GetJaegerAddr() string {
+	return _map.JaegerAddr
 }

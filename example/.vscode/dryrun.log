@@ -1,0 +1,5 @@
+make.exe --dry-run --always-make --keep-going --print-directory
+make.exe: Entering directory 'f:/xxj/work/workspace/github/xxjwxc/gmsec/example'
+make clear
+make.exe: Leaving directory 'f:/xxj/work/workspace/github/xxjwxc/gmsec/example'
+ 

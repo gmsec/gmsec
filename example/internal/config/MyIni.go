@@ -14,7 +14,7 @@ type Config struct {
 	Port        string      `yaml:"port" consul:"port"`                // 端口号
 	ConsulAddr  string      `yaml:"consul_addr" consul:"consul_addr" ` // consul 地址
 	ConsulTag   string      `yaml:"consul_tag" consul:"consul_tag"`
-	JaegerAddr  string      `yaml:"jaeger_addr" consul:"jaeger_addr"`
+	Jaeger      Jaeger      `yaml:"jaeger" consul:"jaeger"`
 }
 
 // MysqlDbInfo mysql database information. mysql 数据库信息
@@ -39,6 +39,21 @@ type RedisDbInfo struct {
 type EtcdInfo struct {
 	Addrs   []string `yaml:"addrs" consul:"addrs"`     // Host. 地址
 	Timeout int      `yaml:"timeout" consul:"timeout"` // 超时时间(秒)
+}
+
+// NacosInfo nacos information nacos配置信息
+type NacosInfo struct {
+	IpAddr    string `yaml:"ipaddr" consul:"ipaddr"`       // 地址
+	Port      uint64 `yaml:"port" consul:"port"`           // 端口
+	Namespace string `yaml:"namespace" consul:"namespace"` // 命名空间
+	Group     string `yaml:"group" consul:"group"`         // 组
+	DataId    string `yaml:"dataid" consul:"dataid"`       // Key
+}
+
+type Jaeger struct {
+	Addr    string `yaml:"addr" consul:"addr"`        // 地址
+	Percent int    `yaml:"password" consul:"percent"` //  比例
+	Tag     string `yaml:"tag" consul:"tag"`          // 标记 dev,prd等
 }
 
 // SetMysqlDbInfo Update MySQL configuration information
@@ -100,6 +115,6 @@ func GetConsulTag() string {
 	return "service"
 }
 
-func GetJaegerAddr() string {
-	return _map.JaegerAddr
+func GetJaeger() Jaeger {
+	return _map.Jaeger
 }

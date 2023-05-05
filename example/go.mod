@@ -4,14 +4,11 @@ go 1.14
 
 require (
 	github.com/chenjiandongx/ginprom v0.0.0-20201217063207-fe11b7f55a35
-	github.com/gin-gonic/gin v1.8.2
+	github.com/gin-gonic/gin v1.9.0
 	github.com/gmsec/goplugins v0.0.0-20230218035152-908916def79e
 	github.com/gmsec/micro v0.0.0-20221221102820-e5f69d99428e
-	github.com/go-playground/validator/v10 v10.11.2 // indirect
-	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/prometheus/client_golang v1.11.1
-	github.com/ugorji/go/codec v1.2.9 // indirect
 	github.com/xxjwxc/consult v0.0.0-20211111094307-0c21a44a4cd0
 	github.com/xxjwxc/ginrpc v0.0.0-20220727093154-897eb26bf971
 	github.com/xxjwxc/gowp v0.0.0-20200603130651-4d7368b0e285

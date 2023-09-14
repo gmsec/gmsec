@@ -18,7 +18,11 @@ gen_build:# 自定义注册
 	 echo build $$file; \
 	 protoc --proto_path="$(APIDOCDIR)/proto/" --gmsec_out=plugins=gmsec:./ $(NAME)/$$file; \
 	done;
+ifeq ($(OS),Windows_NT) # windows
 	@sed -i 's/,omitempty//g' ./rpc/$(NAME)/*.pb.go #开始取消json omitempty
+else
+	@sed -i '' 's/,omitempty//g' ./rpc/$(NAME)/*.pb.go #开始取消json omitempty
+endif
 	cp -rf ./rpc/$(NAME)/ $(RPCCDIR)/ #子目录向父目录拷贝
 	#@sed -i 's#common "rpc/common"#common "$(NAME)/rpc/common"#g' ./rpc/$(NAME)/*.pb.go #开始替换common包
 	#@sed -i 's#common "rpc/common"#common "$(NAME)/rpc/common"#g' ./rpc/$(NAME)/*.pb.gmsec.go #开始替换common包
@@ -34,7 +38,11 @@ gen_base:# 基础库
 	 echo base $$file; \
 	 protoc --proto_path="$(APIDOCDIR)/proto/" --gmsec_out=plugins=gmsec:$(APIDOCDIR)/ common/$$file; \
 	done;
+ifeq ($(OS),Windows_NT) # windows
 	@sed -i 's/,omitempty//g' $(RPCCDIR)/common/*.pb.go #开始取消json omitempty
+else
+	@sed -i '' 's/,omitempty//g' $(RPCCDIR)/common/*.pb.go #开始取消json omitempty
+endif
 	#cp -rf $(RPCCDIR)/common/ ./rpc/ #父目录向当前目录拷贝
 	
 

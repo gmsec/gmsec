@@ -26,7 +26,7 @@ func CallBack() {
 	myswagger.SetBasePath("example")
 	myswagger.SetSchemes(true, false)
 	// -----end --
-	tracer.WithTracer(config.GetJaeger().Tag, config.GetJaeger().Addr, config.GetJaeger().Percent) // 链路追踪
+	tracer.WithTracer(config.GetJaeger().Tag, config.GetJaeger().Addr, config.GetJaeger().Percent, config.GetJaeger().MaxTagsLen) // 链路追踪
 
 	reg := registry.NewDNSNamingRegistry()
 	// reg := etcdv3.NewEtcdv3NamingRegistry(v3.Config{

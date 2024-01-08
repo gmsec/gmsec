@@ -51,9 +51,10 @@ type NacosInfo struct {
 }
 
 type Jaeger struct {
-	Addr    string `yaml:"addr" consul:"addr"`        // 地址
-	Percent int    `yaml:"password" consul:"percent"` //  比例
-	Tag     string `yaml:"tag" consul:"tag"`          // 标记 dev,prd等
+	Addr       string `yaml:"addr" consul:"addr"`                 // 地址
+	Percent    int    `yaml:"password" consul:"percent"`          //  比例
+	Tag        string `yaml:"tag" consul:"tag"`                   // 标记 dev,prd等
+	MaxTagsLen int    `yaml:"max_tags_len" consul:"max_tags_len"` // 标记 dev,prd等
 }
 
 // SetMysqlDbInfo Update MySQL configuration information

@@ -49,7 +49,7 @@ func init3rdGrpcHost() {
 
 // InitFunc 默认初始化函数
 func InitFunc(router gin.IRoutes) {
-	router.StaticFS("/file", http.Dir(tools.GetCurrentDirectory()+"/file")) //加载静态资源，一般是上传的资源，例如用户上传的图片
+	router.StaticFS("/file", gin.Dir(tools.GetCurrentDirectory()+"/file", false)) //加载静态资源，一般是上传的资源，例如用户上传的图片
 	router.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "ok")
 	}) // 健康检查

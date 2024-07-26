@@ -5,7 +5,7 @@ go 1.21
 require (
 	github.com/gmsec/micro v0.0.0-20240126043355-ad68a05cb4f3
 	google.golang.org/grpc v1.61.0
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require (

@@ -8,7 +8,7 @@ require (
 	github.com/gmsec/goplugins v0.0.0-20231228125713-43fcb1fd9722
 	github.com/gmsec/micro v0.0.0-20240126043355-ad68a05cb4f3
 	github.com/opentracing/opentracing-go v1.2.0
-	github.com/prometheus/client_golang v1.11.0
+	github.com/prometheus/client_golang v1.11.1
 	github.com/xxjwxc/consult v0.0.0-20211111094307-0c21a44a4cd0
 	github.com/xxjwxc/ginrpc v0.0.0-20230310093254-f637665659ca
 	github.com/xxjwxc/gowp v0.0.0-20200603130651-4d7368b0e285

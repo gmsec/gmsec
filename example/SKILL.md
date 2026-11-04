@@ -113,7 +113,7 @@ type Foo struct{}
 // DoFoo 签名必须与 proto 一一对应
 func (f *Foo) DoFoo(ctx context.Context, req *proto.FooRequest) (*proto.FooReply, error) {
     // gRPC 侧可取 metadata：md, ok := metadata.FromIncomingContext(ctx)
-    // Gin 侧可取原始上下文：c := api.Width_context(ctx)
+    // Gin 侧可取原始上下文：c := api.WidthContext(ctx)
     return &proto.FooReply{}, nil // 返回 error 即返回失败，响应壳由框架统一包装
 }
 ```

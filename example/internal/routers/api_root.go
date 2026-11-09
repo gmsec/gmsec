@@ -161,17 +161,23 @@ func (d *JagerGinBeforeAfter) GinBefore(req *ginrpc.GinBeforeAfterInfo) bool {
 
 // GinAfter call之后调用
 func (d *JagerGinBeforeAfter) GinAfter(req *ginrpc.GinBeforeAfterInfo) bool {
-	begin := (req.Context.Value(timeTrace{})).(time.Time)
-	now := time.Now()
-	mylog.Info(fmt.Sprintf("[middleware] call[%v] [%v]", req.FuncName, now.Sub(begin)))
+	// 历史实现直接 .(time.Time) 断言:GinAfter 没有配对的 GinBefore
+	// (或 ginrpc 换掉了上下文)时直接 panic,一次中间件失误会把整个进程带走。
+	var cost time.Duration
+	if begin, ok := req.Context.Value(timeTrace{}).(time.Time); ok {
+		cost = time.Since(begin)
+	}
+	mylog.Info(fmt.Sprintf("[middleware] call[%v] [%v]", req.FuncName, cost))
 
 	msg := message.GetSuccessMsg()
 	if req.Error != nil {
 		msg = message.GetErrorMsg(message.InValidOp)
-		gerr := status.Convert(req.Error)
-		if gerr != nil {
-			msg.Code = int(gerr.Code())
-			msg.Error = gerr.Message()
+		// status.Convert 永远不会返回 nil(非 grpc 错误会被包成 Unknown),
+		// 所以原来的 else 分支是死代码,且会把业务 error 的 code 覆盖成 2。
+		// 只有实现了 GRPCStatus() 的错误才提取 code/message。
+		if st, ok := status.FromError(req.Error); ok {
+			msg.Code = int(st.Code())
+			msg.Error = st.Message()
 		} else {
 			msg.Error = req.Error.Error()
 		}

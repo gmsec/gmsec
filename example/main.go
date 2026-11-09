@@ -15,8 +15,6 @@ import (
 	"github.com/gmsec/micro/tracer"
 	"github.com/xxjwxc/public/mydoc/myswagger"
 	"github.com/xxjwxc/public/server"
-	_ "go.etcd.io/etcd/client/v3"
-	// "github.com/gmsec/micro/tracer"
 )
 
 // CallBack service call backe
@@ -57,9 +55,13 @@ func CallBack() {
 		plugin.WithGin(router),
 		plugin.WithAddr(":"+config.GetPort()))
 
-	if b == nil {
-		plg.Wait()
+	if b != nil {
+		// 历史实现在 b != nil 时直接落到下面的 "done",
+		// 服务根本没启动却以成功退出,排查时完全看不到原因。
+		fmt.Println("plugin run error:", b)
+		return
 	}
+	plg.Wait()
 	fmt.Println("done")
 }
 

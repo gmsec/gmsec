@@ -58,10 +58,10 @@ func NewExampleClient(cc client.Client) ExampleClient {
 
 func (c *exampleClient) SayHello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloReply, error) {
 	conn, err := c.cc.Next()
-	defer conn.Close()
 	if err != nil {
 		return nil, err
 	}
+	defer conn.Close()
 	out := new(HelloReply)
 	err = conn.Invoke(ctx, "/example.example/SayHello", in, out, opts...)
 	if err != nil {

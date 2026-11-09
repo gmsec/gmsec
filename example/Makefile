@@ -1,41 +1,45 @@
 NAME := example
+
+.PHONY: all build run windows mac linux clear clean-proto proto gen orm install source_install master
+
 all: # 构建
 	make clear
 build:
 	make clear
 	./tools/gormt -o internal/model
-	go build -o $(NAME) main.go 
+	go build -o $(NAME) main.go
 	./$(NAME) debug
 run:
 	# make clear
 	# ./tools/gormt -o internal/model
-	go build -o $(NAME) *.go 
+	go build -o $(NAME) *.go
 	./$(NAME) debug
 windows:
-	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o $(NAME).exe main.go 
+	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -o $(NAME).exe main.go
 mac:
-	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o $(NAME) main.go 
+	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -o $(NAME) main.go
 linux:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(NAME) main.go 
-clear: 
-	test ! -d internal/model/ || rm -rf  internal/model/*
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o $(NAME) main.go
+
+# 只清理编译产物和 gormt 生成物。
+# 注意这里**不能**删生成的 proto 代码:build 依赖 clear,
+# 删了 rpc/<name> 之后 go build 会找不到包,历史实现就是这么坏的。
+clear:
+	test ! -d internal/model/ || rm -rf internal/model/*
 	test ! -d err/ || rm -rf err/
 	test ! -f $(NAME) || rm $(NAME)
 	test ! -f $(NAME).exe || rm $(NAME).exe
-	rm -rf ./rpc/$(NAME)/*.go # 删除proto文件夹下所有go文件（谨慎操作）
-# gen:
-# 	- mkdir ../rpc
-# 	- mkdir ./rpc/$(+)
-# 	test -L rpc || ln -s ../rpc ./
-# 	protoc --proto_path="../apidoc/proto/$(SaverName)/" --gmsec_out=plugins=gmsec:./rpc/$(SaverName) hello.proto
+
+# 显式删除生成的 proto 代码(原 clear 的行为),删完记得 make proto 重新生成
+clean-proto:
+	go run ./tools/protogen -name $(NAME) -clean
+
+# 代码生成统一走 Go 程序(tools/protogen):
+# 旧链路是 make + `ls | cut` + `sed -i ''` + cp -rf,
+# BSD sed/GNU sed 参数不同、Windows 没有 sed,且 cp 的目标目录两个平台分支还不一致。
+proto:
+	go run ./tools/protogen -name $(NAME) -apidoc ../apidoc -v
 gen:
-ifeq ($(LANG),) # windows
-	# test ! -d rpc/ || rm -rf  rpc/
-	# test -h rpc || ln -s ../rpc ./
-else
-	# test -h rpc || ln -s ../rpc ./ # with linux/mac
-	test -d rpc || ln -s ../rpc ./
-endif
 	go generate
 orm: # gormt 生成 orm代码
 	./tools/gormt -o internal/model

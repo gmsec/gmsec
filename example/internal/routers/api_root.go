@@ -104,22 +104,43 @@ func Cors() gin.HandlerFunc {
 	}
 }
 
+// isTraceSkipPath 不需要链路追踪的路径(健康检查/监控/静态资源)
+func isTraceSkipPath(path string) bool {
+	return path == "/health" || path == "/metrics" || strings.HasPrefix(path, "/file/")
+}
+
 // UseJager 链路追踪
 func UseJager(_tracer opentracing.Tracer) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		path := ctx.Request.URL.Path
-		span := _tracer.StartSpan(path, ext.SpanKindRPCServer)
-		ext.HTTPUrl.Set(span, path)
+		if isTraceSkipPath(path) { // 健康检查等请求不打点, 避免产生无用 span
+			ctx.Next()
+			return
+		}
+
+		// 优先接上上游传来的 span(网关注入的 trace 头), 取不到则作为 root span
+		var parent opentracing.SpanContext
+		if sc, err := _tracer.Extract(opentracing.HTTPHeaders, opentracing.HTTPHeadersCarrier(ctx.Request.Header)); err == nil {
+			parent = sc
+		}
+		span := _tracer.StartSpan(path, ext.RPCServerOption(parent))
+		defer span.Finish() // 必须 defer: handler panic 时也要 Finish, 否则 span 永远不会上报
+
+		ext.HTTPUrl.Set(span, ctx.Request.URL.String())
 		ext.HTTPMethod.Set(span, ctx.Request.Method)
-		c := opentracing.ContextWithSpan(ctx, span)
-		ctx.Set("jager_ctx", c)
+
+		// 以 Request.Context() 为父, 并回写请求上下文: 下游取 Request.Context() 才能拿到 span
+		c := opentracing.ContextWithSpan(ctx.Request.Context(), span)
+		ctx.Request = ctx.Request.WithContext(c)
+		ctx.Set(api.JagerCtx, c)
+
 		ctx.Next()
-		req, _ := ctx.Get("jager_req")
-		span.SetTag("request", req)
-		resp, _ := ctx.Get("jager_resp")
-		span.SetTag("response", resp)
-		ext.HTTPStatusCode.Set(span, uint16(ctx.Writer.Status()))
-		span.Finish()
+
+		span.SetTag("request", ctx.GetString("jager_req"))
+		span.SetTag("response", ctx.GetString("jager_resp"))
+		code := ctx.Writer.Status()
+		ext.HTTPStatusCode.Set(span, uint16(code))
+		ext.Error.Set(span, code >= http.StatusInternalServerError)
 		// tracer.CloseTracer()
 	}
 }
@@ -132,7 +153,8 @@ type timeTrace struct{}
 
 // GinBefore call之前调用
 func (d *JagerGinBeforeAfter) GinBefore(req *ginrpc.GinBeforeAfterInfo) bool {
-	req.Context = context.WithValue(req.Context, timeTrace{}, time.Now())
+	// ginrpc 默认给的是 context.Background(), 换成带 span 的上下文, 前后钩子拿到的 ctx 才能接进同一条链路
+	req.Context = context.WithValue(api.TraceCtx(req.C), timeTrace{}, time.Now())
 	req.C.Set("jager_req", tools.JSONDecode(req.Req))
 	return true
 }

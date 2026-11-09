@@ -138,7 +138,7 @@ make run    # 前台启动，swagger/浏览器验证 restful；或 go test 走 g
 - **同一份实现双协议生效**：gRPC 与 Gin 共用此方法，业务代码不区分调用来源；REST 路由由 ginrpc 按方法名自动映射。
 - **统一响应勿手工拼**：成功返回 `(reply, nil)`；失败返回 `(nil, err)`——`api_root.go` 的 `GinAfter` 中间件自动包装 `message.GetSuccessMsg()/GetErrorMsg()`，gRPC error 会经 `status.Convert` 透出 code/message。错误码使用 `github.com/xxjwxc/public/message` 常量体系，不自造。
 - **日志**：统一 `mylog.Info/Warn/Error`（`github.com/xxjwxc/public/mylog`）；每次调用耗时由中间件统一打点，业务内不重复打耗时日志；`fmt.Println` 仅限临时调试。
-- **链路追踪**：Jaeger 已由 `main.go` + `UseJager` 中间件接好，业务无需关心；跨服务透传用 gin 上下文里的 `jager_ctx`。
+- **链路追踪**：Jaeger 已由 `main.go` + `UseJager` 中间件接好（服务端 span 会从请求头 Extract 上游 span，并回写 `Request.Context()`）；REST handler 的 `ctx` 参数已注入 span，跨服务透传统一用 `api.TraceCtx(ginCtx)` 取上下文，不要用裸 `context.Background()`。
 - **服务初始化流程**（`main.go` 的 `CallBack()`，一般无需改动）：swagger 设置 → Jaeger tracer → 注册方式（默认 DNS/mdns，etcd 见注释示例）→ `micro.NewService(micro.WithName("gmsec.srv.[service]"))` → gin 路由组 `/[service]/api/v1` → `routers.OnInitRoot`（挂载业务唯一入口）→ `plugin.Run` 同端口拉起 gRPC+Gin。启动模式：`is_dev: true` 或 `./[service] debug` 前台直跑；否则 `server.On(...).Start` 托管模式。
 - **依赖注入**：显式构造 + 统一注册，不用额外 DI 框架；业务对象在 `OnInitRoot` 中 `new` 挂载，外部依赖经 `internal/core` 封装懒加载。
 

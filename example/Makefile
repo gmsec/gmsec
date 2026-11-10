@@ -60,4 +60,7 @@ source_install:
 #   go get github.com/gmsec/micro@v0.0.0-20261109063142-72c07e589862
 #   go get github.com/gmsec/goplugins@v0.0.0-20261109063246-61926158433f
 master:
-	@echo "禁止 @master 升级:请按 go.mod 里的固定版本显式指定后手动执行(见上方注释)"
+	go get -u github.com/xxjwxc/public@master
+	go get -u github.com/xxjwxc/ginrpc@master
+	go get -u github.com/gmsec/micro@master
+	go get -u github.com/gmsec/goplugins@master

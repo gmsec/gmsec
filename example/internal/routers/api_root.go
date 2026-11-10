@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -49,11 +51,40 @@ func init3rdGrpcHost() {
 
 // InitFunc 默认初始化函数
 func InitFunc(router gin.IRoutes) {
-	router.StaticFS("/file", gin.Dir(tools.GetCurrentDirectory()+"/file", false)) //加载静态资源，一般是上传的资源，例如用户上传的图片
+	// /file 原来无条件挂载一个并不存在的目录,请求必然 404,还把目录约定暴露出去。
+	// 只有目录真实存在时才挂载,并挂上 token 鉴权中间件,避免静态资源被匿名读取。
+	fileDir := filepath.Join(tools.GetCurrentDirectory(), "file")
+	if fi, err := os.Stat(fileDir); err == nil && fi.IsDir() {
+		router.Use(fileAuth())
+		router.StaticFS("/file", gin.Dir(fileDir, false))
+	}
 	router.GET("/health", func(c *gin.Context) {
 		c.String(http.StatusOK, "ok")
 	}) // 健康检查
 	router.GET("/metrics", ginprom.PromHandler(promhttp.Handler())) // 添加grafana监控
+}
+
+// fileAuth 静态资源鉴权:只对 /file 下的请求生效,复用业务 token 校验。
+func fileAuth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if !strings.Contains(c.Request.URL.Path, "/file") {
+			c.Next()
+			return
+		}
+		token, err := c.Cookie(api.UserToken)
+		if err != nil {
+			token, err = c.Cookie(api.SessionToken)
+		}
+		if err != nil || token == "" {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+		if _, ok := api.GetUserFromToken(api.TraceCtx(c), token); !ok {
+			c.AbortWithStatus(http.StatusUnauthorized)
+			return
+		}
+		c.Next()
+	}
 }
 
 // InitObj 初始化对象
@@ -66,38 +97,55 @@ func InitObj(router gin.IRoutes, objs ...interface{}) {
 	base.Register(router, objs...) // 对象注册
 }
 
+// allowedOrigins 跨域来源白名单,来自环境变量 GMSEC_CORS_ALLOWED_ORIGINS(逗号分隔)。
+// 不配置时为空,此时不回显 Access-Control-Allow-Origin,等价于只允许同源。
+func allowedOrigins() []string {
+	var out []string
+	for _, s := range strings.Split(os.Getenv("GMSEC_CORS_ALLOWED_ORIGINS"), ",") {
+		if s = strings.TrimSpace(s); s != "" {
+			out = append(out, s)
+		}
+	}
+	return out
+}
+
+func originAllowed(origin string, whitelist []string) bool {
+	for _, o := range whitelist {
+		if o == origin {
+			return true
+		}
+	}
+	return false
+}
+
 // Cors 跨域问题
 func Cors() gin.HandlerFunc {
+	whitelist := allowedOrigins()
 	return func(c *gin.Context) {
-		method := c.Request.Method
-
-		origin := c.Request.Header.Get("Origin")
-		var headerKeys []string
-		for k := range c.Request.Header {
-			headerKeys = append(headerKeys, k)
-		}
-		headerStr := strings.Join(headerKeys, ", ")
-		if headerStr != "" {
-			headerStr = fmt.Sprintf("access-control-allow-origin, access-control-allow-headers, %s", headerStr)
-		} else {
-			headerStr = "access-control-allow-origin, access-control-allow-headers"
-		}
-		if origin != "" {
-			//下面的都是乱添加的-_-~
-			// c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-			c.Header("Access-Control-Allow-Origin", "*")
-			c.Header("Access-Control-Allow-Headers", headerStr)
+		origin := c.GetHeader("Origin")
+		if origin != "" && originAllowed(origin, whitelist) {
+			// 回显具体 Origin,不能用通配 "*":它与 Allow-Credentials: true 冲突,
+			// 浏览器会直接拒绝带凭据的跨域请求。
+			c.Header("Access-Control-Allow-Origin", origin)
+			c.Header("Vary", "Origin")
+			var headerKeys []string
+			for k := range c.Request.Header {
+				headerKeys = append(headerKeys, k)
+			}
+			allowHeaders := strings.Join(headerKeys, ", ")
+			if allowHeaders == "" {
+				allowHeaders = "Content-Type, Authorization"
+			}
+			c.Header("Access-Control-Allow-Headers", allowHeaders)
 			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
-			// c.Header("Access-Control-Allow-Headers", "Authorization, Content-Length, X-CSRF-Token, Accept, Origin, Host, Connection, Accept-Encoding, Accept-Language,DNT, X-CustomHeader, Keep-Alive, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Pragma")
 			c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type")
-			// c.Header("Access-Control-Max-Age", "172800")
 			c.Header("Access-Control-Allow-Credentials", "true")
-			c.Set("content-type", "application/json")
 		}
 
-		//放行所有OPTIONS方法
-		if method == "OPTIONS" {
-			c.JSON(http.StatusOK, "Options Request!")
+		// 预检请求直接返回并中止,不再落到后面的业务 handler。
+		if c.Request.Method == http.MethodOptions {
+			c.AbortWithStatus(http.StatusNoContent)
+			return
 		}
 
 		c.Next()

@@ -1,30 +1,38 @@
-#!/bin/bash -x 
+#!/usr/bin/env bash
+# 安装 protoc 与 Go 代码生成插件(Windows / Git Bash, win64)。版本说明见 proto_install_linux.sh。
+set -euo pipefail
 
-version="3.11.4"
+PROTOC_VERSION="33.0"
+PROTOC_GEN_GO_VERSION="v1.36.11"
+PROTOC_GEN_GMSEC_VERSION="v0.0.0-20261109063214-7e430756646d"
 
-export https_proxy=http://git.iizone.com.cn:32222 http_proxy=http://git.iizone.com.cn:32222 all_proxy=socks5://git.iizone.com.cn:32222
-PROTOBUF_RELEASES_URL="https://github.com/protocolbuffers/protobuf/releases/download/v${version}/protoc-${version}-win64.zip"
+# 内网代理已移除:需要代理请由调用方 export HTTPS_PROXY,不设置就直连。
+: "${HTTPS_PROXY:=}"
+export HTTPS_PROXY https_proxy="${HTTPS_PROXY}"
 
-# su - xxj -c "qwer"
-# download
-curl -fLo protobuf.tar.zip ${PROTOBUF_RELEASES_URL}
-mkdir protobuf-${version}
-unzip -d ./protobuf-${version}/ protobuf.tar.gz
-cd protobuf-${version}
+# Windows 下 go env 返回反斜杠路径,用 cygpath -m 转成 D:/... 供 bash 和 Go 共同识别。
+GOBIN_DIR="$(go env GOBIN)"
+if [ -z "${GOBIN_DIR}" ]; then
+	GOBIN_DIR="$(go env GOPATH)/bin"
+fi
+if command -v cygpath >/dev/null 2>&1; then
+	GOBIN_DIR="$(cygpath -m "${GOBIN_DIR}")"
+fi
+mkdir -p "${GOBIN_DIR}"
+export GOBIN="${GOBIN_DIR}"
 
-# install
-# xattr -c ./bin/protoc
-cp -r ./bin/protoc.exe $GOPATH/bin
-cd ../
-rm -rf protobuf-${version}/
-rm -rf ./protobuf.tar.gz
+PROTOBUF_RELEASES_URL="https://github.com/protocolbuffers/protobuf/releases/download/v${PROTOC_VERSION}/protoc-${PROTOC_VERSION}-win64.zip"
 
-# install go-grpc
-go get -u google.golang.org/grpc
-go get -u github.com/gmsec/protoc-gen-gmsec
-go install github.com/gmsec/protoc-gen-gmsec
+# 下载到临时目录并 trap 清理;绝不删除仓库里已被 git 跟踪的 protobuf.tar.zip。
+TMP_DIR="$(mktemp -d)"
+trap 'rm -rf "${TMP_DIR}"' EXIT
 
-# chmod +x $GOPATH/bin/protoc
+curl -fLo "${TMP_DIR}/protoc.zip" "${PROTOBUF_RELEASES_URL}"
+unzip -q "${TMP_DIR}/protoc.zip" -d "${TMP_DIR}/protoc"
+cp "${TMP_DIR}/protoc/bin/protoc.exe" "${GOBIN}/protoc.exe"
 
+go install "google.golang.org/protobuf/cmd/protoc-gen-go@${PROTOC_GEN_GO_VERSION}"
+go install "github.com/gmsec/protoc-gen-gmsec@${PROTOC_GEN_GMSEC_VERSION}"
+
+test -x "${GOBIN}/protoc.exe"
 echo "SUCCESS"
-#end

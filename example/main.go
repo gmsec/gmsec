@@ -1,11 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"flag"
 	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"example/internal/config"
+	"example/internal/core"
 	"example/internal/routers"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +17,9 @@ import (
 	"github.com/gmsec/micro"
 	"github.com/gmsec/micro/registry"
 	"github.com/gmsec/micro/tracer"
+	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/mydoc/myswagger"
+	"github.com/xxjwxc/public/mylog"
 	"github.com/xxjwxc/public/server"
 )
 
@@ -51,24 +57,67 @@ func CallBack() {
 	routers.OnInitRoot(service.Server(), v1) // 自定义初始化
 	// ------ end
 
-	plg, b := plugin.Run(plugin.WithMicro(service),
+	plg, err := plugin.Run(plugin.WithMicro(service),
 		plugin.WithGin(router),
 		plugin.WithAddr(":"+config.GetPort()))
-
-	if b != nil {
-		// 历史实现在 b != nil 时直接落到下面的 "done",
-		// 服务根本没启动却以成功退出,排查时完全看不到原因。
-		fmt.Println("plugin run error:", b)
-		return
+	if err != nil {
+		// 启动失败必须记日志并以非 0 退出;历史实现 fmt.Println 后直接 return,
+		// 服务根本没起来却当成正常结束(前台模式会直接 exit 0)。
+		mylog.Error(err)
+		core.Dao.Destroy()
+		tracer.CloseTracer()
+		os.Exit(1)
 	}
-	plg.Wait()
-	fmt.Println("done")
+
+	// 捕获 SIGINT/SIGTERM,收到信号后主动触发优雅退出。
+	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+	defer stop()
+
+	done := make(chan struct{})
+	go func() {
+		plg.Wait()
+		close(done)
+	}()
+
+	select {
+	case <-done:
+		mylog.Info("服务已退出,开始清理")
+	case <-ctx.Done():
+		mylog.Info("收到退出信号,开始优雅关闭")
+	}
+
+	// 退出顺序:先停服务摘流量,再释放数据库连接,最后关闭 tracer。
+	plg.Stop()
+	core.Dao.Destroy()
+	tracer.CloseTracer()
+	mylog.Info("done")
 }
 
 func main() {
-	if config.GetIsDev() || len(os.Args) == 0 {
-		CallBack()
-	} else {
-		server.On(config.GetServiceConfig()).Start(CallBack)
+	// 配置加载错误在包 init 中保存,由 main 决定退出码(非 0)。
+	if err := config.ConfigError(); err != nil {
+		mylog.Error(err)
+		os.Exit(1)
 	}
+
+	// len(os.Args) == 0 恒为假(os.Args 至少含程序名),原来那个条件永远不生效。
+	// 改用显式的 debug 参数控制前台模式,和 Makefile 里的 `./example debug` 对齐。
+	debug := flag.Bool("debug", false, "前台运行(不走系统服务管理)")
+	flag.Parse()
+	foreground := *debug
+	for _, a := range flag.Args() {
+		if a == "debug" {
+			foreground = true
+		}
+	}
+
+	if config.GetIsDev() || foreground {
+		// 与历史 `./example debug` 行为一致:前台调试时打开 dev 标记(swagger/ginrpc 调试输出)。
+		if foreground {
+			dev.OnSetDev(true)
+		}
+		CallBack()
+		return
+	}
+	server.On(config.GetServiceConfig()).Start(CallBack)
 }

@@ -1,0 +1,21 @@
+# 版本库/CI/IDE 元数据不进构建上下文
+.git
+.github
+.vscode
+.workbuddy
+.idea
+
+# 下载/解压产物(仓库里已被跟踪的 protobuf.tar.zip 也不需要进镜像)
+*.zip
+*.tar.gz
+*.tgz
+
+# 本地构建产物
+*.exe
+*.test
+example/example
+example/example.exe
+example/internal/model/*
+
+# 本地环境变量(含口令)
+.env

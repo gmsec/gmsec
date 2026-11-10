@@ -15,3 +15,14 @@
 # vendor/
 /.idea
 *.iml
+# VS Code Go 扩展的日志,不该进版本库
+**/.vscode/*.log
+
+# 下载/解压产物:仓库里已被 git 跟踪的 protobuf.tar.zip 需自行
+# `git rm --cached protobuf.tar.zip`,这里只忽略新增文件。
+*.zip
+*.tar.gz
+*.tgz
+
+# 本地环境变量文件(含口令),不要提交;.env.example 是模板可以提交
+.env

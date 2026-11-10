@@ -3,19 +3,25 @@ package api
 import (
 	"context"
 	"encoding/json"
-	"example/internal/config"
 	"io"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
+	"example/internal/config"
+
 	"github.com/opentracing/opentracing-go"
-	"github.com/xxjwxc/public/dev"
 	"github.com/xxjwxc/public/message"
 	"github.com/xxjwxc/public/mycache"
 	"github.com/xxjwxc/public/mylog"
 )
+
+// checkTokenTimeout 校验 token 的下游调用超时,避免没有超时的请求把服务拖死。
+const checkTokenTimeout = 5 * time.Second
+
+// checkTokenClient 复用带超时的 Client,替代无超时的 http.DefaultClient。
+var checkTokenClient = &http.Client{Timeout: checkTokenTimeout}
 
 // UserInfo 用户信息
 type UserInfo struct {
@@ -34,15 +40,15 @@ type MapMessageBody struct {
 // ctx 需携带链路追踪 span(可用 TraceCtx 获取), 以便下游调用接入同一条链路
 func GetUserFromToken(ctx context.Context, token string) (userInfo *UserInfo, b bool) {
 	if ctx == nil {
-		ctx = context.Background()
+		// 裸 context.Background() 没有超时,下游 hang 住会一直等待,这里补上超时。
+		var cancel context.CancelFunc
+		ctx, cancel = context.WithTimeout(context.Background(), checkTokenTimeout)
+		defer cancel()
 	}
 	if len(token) == 0 {
-		if dev.IsDev() {
-			return &UserInfo{
-				UserName: "admin",
-			}, true
-		}
-		return
+		// 认证绕过只在 -tags dev 构建下存在(见 auth_dev.go / auth_prod.go),
+		// 默认(生产)构建恒返回 (nil, false)。
+		return devBypassUser()
 	}
 
 	// 先从缓存中获取
@@ -55,7 +61,11 @@ func GetUserFromToken(ctx context.Context, token string) (userInfo *UserInfo, b 
 
 	parm := make(map[string]string)
 	parm["token"] = token
-	bod, _ := json.Marshal(parm)
+	bod, err := json.Marshal(parm)
+	if err != nil {
+		mylog.Error(err)
+		return
+	}
 	rBody, err := postJSONWithTrace(ctx, config.GetCheckTokenURL(), string(bod))
 	if err != nil {
 		mylog.Error(err)
@@ -63,7 +73,10 @@ func GetUserFromToken(ctx context.Context, token string) (userInfo *UserInfo, b 
 	}
 	if len(rBody) > 0 {
 		var msg MapMessageBody
-		json.Unmarshal([]byte(rBody), &msg)
+		if err := json.Unmarshal(rBody, &msg); err != nil {
+			mylog.Error(err)
+			return
+		}
 		if msg.State {
 			SaveCacheBody(token, msg.Data["username"], msg.Data["expire_time"]) // 保存缓存
 			return &UserInfo{
@@ -90,7 +103,7 @@ func postJSONWithTrace(ctx context.Context, url, jsonStr string) ([]byte, error)
 		}
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := checkTokenClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -124,6 +137,11 @@ func GetCacheBody(token string) (value *UserInfo, b bool) {
 }
 
 func strToInt(src string) int {
-	i, _ := strconv.Atoi(src)
+	i, err := strconv.Atoi(src)
+	if err != nil {
+		// 原来直接丢弃 err,非法值会静默变 0;至少记日志,便于排查下游脏数据。
+		mylog.Errorf("strToInt: 解析 %q 失败: %v", src, err)
+		return 0
+	}
 	return i
 }

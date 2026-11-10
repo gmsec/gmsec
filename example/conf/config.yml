@@ -1,5 +1,9 @@
+# 示例配置:所有口令/内网地址均已移除,只保留占位值。
+# 生产环境请用环境变量注入敏感项(见仓库根目录 .env.example),不要在此文件写真实口令:
+#   GMSEC_DB_PASSWORD / GMSEC_REDIS_PASSWORD / GMSEC_CONSUL_ADDR / GMSEC_JAEGER_ADDR
+# 环境变量存在时才会覆盖同名项;留空的 consul_addr 表示不启用 consul 热更新。
 base:
-    is_dev : true
+    is_dev : false
     serial_number : 1.0.0
     service_name : example
     service_displayname : exampleserver
@@ -8,17 +12,22 @@ mysql_info:
     host : localhost
     port : 3306
     username : root
-    password : 123456
+    password : ""          # 示例占位;生产由 GMSEC_DB_PASSWORD 注入
     database : oauth_db
 redis_info:
     addrs: ["127.0.0.1:6379"]
-    password: 123456
+    password: ""           # 示例占位;生产由 GMSEC_REDIS_PASSWORD 注入
     group_name: oauth2
     db: 0
 etcd_info:
     addrs: ["127.0.0.1:2379"]
     timeout: 3
-consul_addr: http://192.155.1.150:8500
+consul_addr: http://127.0.0.1:8500  # 示例占位值;生产由 GMSEC_CONSUL_ADDR 注入,置空则不启用
 consul_tag: dev
-jaeger_addr: 192.155.1.150:6831
+# Jaeger 是嵌套对象(config.GetJaeger() 读取),不能用顶层 jaeger_addr 字符串。
+jaeger:
+    addr: 127.0.0.1:6831  # 示例占位;生产由 GMSEC_JAEGER_ADDR 注入
+    percent: 100           # 采样比例 0-100
+    tag: dev
+    max_tags_len: 1024
 port: 82

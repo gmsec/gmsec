@@ -1,6 +1,4 @@
 package main
 
-// 编译所有
-//go:generate go run ./tools/protogen
-// 部分
-// go:generate go run ./tools/protogen -name example
+// 生成 example 服务的 proto/gRPC 代码(需要先装好 protoc 工具链)。
+//go:generate go -C ../tools run ./gmsecgen proto -root .. -name example

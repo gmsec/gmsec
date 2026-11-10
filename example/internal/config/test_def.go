@@ -20,7 +20,7 @@ mysql_info:
     host : 127.0.0.1
     port : 3306
     username : root
-    password : qwer
+    password : "" # 明文口令已移除,测试/生成时按需临时填写
     database : oauth_db
 `
 )

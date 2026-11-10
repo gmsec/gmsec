@@ -6,12 +6,12 @@ all: # 构建
 	make clear
 build:
 	make clear
-	./tools/gormt -o internal/model
+	# gormt 是外部可选二进制:存在才执行,不存在给提示并继续,不影响 go build。
+	@if [ -x ./tools/gormt ]; then ./tools/gormt -o internal/model; \
+	else echo "跳过 gormt: 未找到 ./tools/gormt(可选外部工具)"; fi
 	go build -o $(NAME) main.go
 	./$(NAME) debug
 run:
-	# make clear
-	# ./tools/gormt -o internal/model
 	go build -o $(NAME) *.go
 	./$(NAME) debug
 windows:
@@ -30,25 +30,34 @@ clear:
 	test ! -f $(NAME) || rm $(NAME)
 	test ! -f $(NAME).exe || rm $(NAME).exe
 
-# 显式删除生成的 proto 代码(原 clear 的行为),删完记得 make proto 重新生成
+# 只删除生成的 proto 代码,不碰手写代码;删完用 make proto 重新生成。
 clean-proto:
-	go run ./tools/protogen -name $(NAME) -clean
+	go -C ../tools run ./gmsecgen clean-proto -root .. -name $(NAME)
 
-# 代码生成统一走 Go 程序(tools/protogen):
-# 旧链路是 make + `ls | cut` + `sed -i ''` + cp -rf,
-# BSD sed/GNU sed 参数不同、Windows 没有 sed,且 cp 的目标目录两个平台分支还不一致。
+# 生成代码统一走 tools/gmsecgen(取代已不存在的 ./tools/protogen)。
 proto:
-	go run ./tools/protogen -name $(NAME) -apidoc ../apidoc -v
+	go -C ../tools run ./gmsecgen proto -root .. -name $(NAME)
 gen:
-	go generate
-orm: # gormt 生成 orm代码
-	./tools/gormt -o internal/model
+	go -C ../tools run ./gmsecgen proto -root .. -name $(NAME)
+orm: # gormt 生成 orm代码(可选)
+	@if [ -x ./tools/gormt ]; then ./tools/gormt -o internal/model; \
+	else echo "跳过 gormt: 未找到 ./tools/gormt(可选外部工具)"; fi
+
+# 按 uname 分派到真实存在的安装脚本(历史写法 ../proto_install.sh 并不存在)。
 install:
-	../proto_install.sh
+	@case "$$(uname -s)" in \
+		MINGW*|MSYS*|CYGWIN*) bash ../proto_install_windows_git_bash.sh ;; \
+		Darwin) bash ../proto_install_mac.sh ;; \
+		*) bash ../proto_install_linux.sh ;; \
+	esac
 source_install:
-	../proto_install.sh
+	bash ../proto_source_install.sh
+
+# 依赖升级:@master 不可复现,已移除。需要升级时把下面注释里的版本改成
+# go.mod 中记录的固定版本后手动执行,禁止使用 go get -u ...@master。
+#   go get github.com/xxjwxc/public@v0.0.0-20260818092048-1d99c237fc20
+#   go get github.com/xxjwxc/ginrpc@v0.0.0-20250705164228-1d0f30c90f21
+#   go get github.com/gmsec/micro@v0.0.0-20261109063142-72c07e589862
+#   go get github.com/gmsec/goplugins@v0.0.0-20261109063246-61926158433f
 master:
-	go get -u github.com/xxjwxc/public@master
-	go get -u github.com/xxjwxc/ginrpc@master
-	go get -u github.com/gmsec/micro@master
-	go get -u github.com/gmsec/goplugins@master
+	@echo "禁止 @master 升级:请按 go.mod 里的固定版本显式指定后手动执行(见上方注释)"

@@ -1,3 +1,5 @@
+# gormt 代码生成用的本地配置:口令留空,不要提交真实口令。
+# 本地生成 orm 代码时临时填写,生成完记得清空;生产口令一律走环境变量注入。
 base:
     is_dev : false
 out_dir : ./model  # 输出目录
@@ -19,7 +21,7 @@ db_info:
     port : 3306
     database : oauth_db
     username : root
-    password : 123456
+    password : "" # 明文口令已移除,本地临时填写
     type: 0 # 数据库类型:0:mysql , 1:sqlite , 2:mssql
 
 # sqlite

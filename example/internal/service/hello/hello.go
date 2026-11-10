@@ -3,9 +3,9 @@ package hello
 import (
 	"context"
 	proto "example/rpc/example"
-	"fmt"
 
 	"github.com/gmsec/micro/tracer"
+	"github.com/xxjwxc/public/mylog"
 	"github.com/xxjwxc/public/tools"
 
 	"google.golang.org/grpc/metadata"
@@ -17,12 +17,13 @@ type Hello struct {
 // SayHello 链路追踪示例: 进来自带的 ctx 已有服务端 span, 往下游扔就是把这个 ctx 传下去
 func (h *Hello) SayHello(ctx context.Context, req *proto.HelloRequest) (*proto.HelloReply, error) {
 	md, ok := metadata.FromIncomingContext(ctx) // 只有 gRPC 进来的请求才有上游 metadata(含 trace 头)
-	fmt.Println(md)
-	fmt.Println(ok)
-	fmt.Println(req)
+	mylog.Debugf("SayHello metadata=%v present=%v req=%v", md, ok, req)
 
-	newCtx, finish, _ := tracer.Start("SayHello", ctx) // 开业务子 span
-	if newCtx != nil {                                 // 保留新上下文, 下游调用作为业务 span 的子 span
+	newCtx, finish, err := tracer.Start("SayHello", ctx) // 开业务子 span
+	if err != nil {
+		mylog.Error(err)
+	}
+	if newCtx != nil { // 保留新上下文, 下游调用作为业务 span 的子 span
 		ctx = newCtx
 	}
 	defer func() {

@@ -1,7 +1,6 @@
-[![Build Status](https://travis-ci.org/gmsec/gmsec.svg?branch=master)](https://travis-ci.org/gmsec/gmsec)
+[![CI](https://github.com/gmsec/gmsec/actions/workflows/ci.yml/badge.svg)](https://github.com/gmsec/gmsec/actions/workflows/ci.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gmsec/gmsec)](https://goreportcard.com/report/github.com/gmsec/gmsec)
-[![codecov](https://codecov.io/gh/gmsec/gmsec/branch/master/graph/badge.svg)](https://codecov.io/gh/gmsec/gmsec)
-[![GoDoc](https://godoc.org/github.com/gmsec/gmsec?status.svg)](https://godoc.org/github.com/gmsec/gmsec)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gmsec/gmsec.svg)](https://pkg.go.dev/github.com/gmsec/gmsec)
 
 
 # [gmsec](https://github.com/gmsec/gmsec)
@@ -41,6 +40,24 @@ make gen
 ```
 make new service=[服务名]
 ```
+
+### 本地构建说明
+
+仓库包含三个独立 module：`example`(主服务)、`apidoc/rpc`(共享 pb 代码)、
+`tools`(脚手架)。三者各自直接构建即可，不需要 workspace（也避免与本机
+`go env -w GOFLAGS=-mod=mod` 之类的全局设置冲突）：
+
+```
+cd example      && go build ./...
+cd apidoc/rpc   && go build ./...
+cd tools        && go build ./...
+```
+
+跨模块调用生成工具统一用 `go -C ../tools run ./gmsecgen ...`
+（`example/Makefile` 的 `proto` / `clean-proto` 与 `go generate` 都走这条路径）。
+
+生产环境的口令/地址不要写进 `example/conf/config.yml`,按 `.env.example`
+通过 `GMSEC_DB_PASSWORD` 等环境变量注入。
 
 ## proto定义
 

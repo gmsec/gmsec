@@ -52,23 +52,29 @@ type NacosInfo struct {
 
 type Jaeger struct {
 	Addr       string `yaml:"addr" consul:"addr"`                 // 地址
-	Percent    int    `yaml:"password" consul:"percent"`          //  比例
+	Percent    int    `yaml:"percent" consul:"percent"`           // 采样比例(0-100)
 	Tag        string `yaml:"tag" consul:"tag"`                   // 标记 dev,prd等
 	MaxTagsLen int    `yaml:"max_tags_len" consul:"max_tags_len"` // 标记 dev,prd等
 }
 
 // SetMysqlDbInfo Update MySQL configuration information
 func SetMysqlDbInfo(info *MysqlDbInfo) {
+	mu.Lock()
+	defer mu.Unlock()
 	_map.MySQLInfo = *info
 }
 
 // GetMysqlDbInfo Get MySQL configuration information .获取mysql配置信息
 func GetMysqlDbInfo() MysqlDbInfo {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.MySQLInfo
 }
 
 // GetMysqlConStr Get MySQL connection string.获取mysql 连接字符串
 func GetMysqlConStr() string {
+	mu.RLock()
+	defer mu.RUnlock()
 	return fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=Local&interpolateParams=True",
 		_map.MySQLInfo.Username,
 		_map.MySQLInfo.Password,
@@ -80,35 +86,49 @@ func GetMysqlConStr() string {
 
 // GetCheckTokenURL checktoken
 func GetCheckTokenURL() string {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.Oauth2Url + "/check_token"
 }
 
 // GetLoginURL 登陆用的url
 func GetLoginURL() string {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.Oauth2Url + "/authorize"
 }
 
 // GetLoginNoPwdURL token 授权模式登陆
 func GetLoginNoPwdURL() string {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.Oauth2Url + "/authorize_nopwd"
 }
 
 // GetPort 获取端口号
 func GetPort() string {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.Port
 }
 
 // GetRedisDbInfo Get redis configuration information .获取redis配置信息
 func GetRedisDbInfo() RedisDbInfo {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.RedisDbInfo
 }
 
 // GetEtcdInfo get etcd configuration information. 获取etcd 配置信息
 func GetEtcdInfo() EtcdInfo {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.EtcdInfo
 }
 
 func GetConsulTag() string {
+	mu.RLock()
+	defer mu.RUnlock()
 	if len(_map.ConsulTag) > 0 {
 		return _map.ConsulTag
 	}
@@ -117,5 +137,7 @@ func GetConsulTag() string {
 }
 
 func GetJaeger() Jaeger {
+	mu.RLock()
+	defer mu.RUnlock()
 	return _map.Jaeger
 }
